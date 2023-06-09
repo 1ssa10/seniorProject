@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String    @id @default(uuid())
+  username   String    @unique
+  password   String
+  first_name String
+  last_name  String
+  isAdmin    Boolean   @default(false)
+  DOB        DateTime
+  gender     Gender
+  Email      String    @unique
+  created_at DateTime  @default(now())
+  Rating     Rating[]
+  Admin      Admin[]
+  Profile    Profile[]
+}
+
+model Admin {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model Profile {
+  id     User    @relation(fields: [userId], references: [id])
+  userId String
+  image  String?
+  BIO    String?
+
+  @@id([userId])
+}
+
+model Film {
+  id              String     @id @default(uuid())
+  title           String
+  description     String
+  age_restriction Int?
+  language        String?
+  duration        DateTime
+  image           String
+  Actors          Actor[]
+  Categories      Category[]
+  directedby      Director   @relation(fields: [directorId], references: [id])
+  directorId      String
+  ACT_Rate        AVG_Rate?  @relation(fields: [AVG_RateId], references: [id])
+  AVG_RateId      String?
+  Rating          Rating[]
+}
+
+model Actor {
+  id          String    @id @default(uuid())
+  first_name  String
+  last_name   String
+  age         Int?
+  DOb         DateTime?
+  nationality String?
+  gender      Gender
+  image       String
+  Films       Film[]
+}
+
+model Director {
+  id          String    @id @default(uuid())
+  first_name  String
+  last_name   String
+  age         Int?
+  DOb         DateTime?
+  nationality String?
+  gender      Gender
+  image       String
+  Films       Film[]
+}
+
+model Category {
+  id        String @id @default(uuid())
+  catergory String
+  Films     Film[]
+}
+
+model Rating {
+  rater     User     @relation(fields: [userId], references: [id])
+  userId    String
+  film      Film     @relation(fields: [filmId], references: [id])
+  filmId    String
+  comment   Comment  @relation(fields: [commentId], references: [id])
+  commentId String
+  date      DateTime
+  nb_stars  Float
+
+  @@id([userId, filmId])
+}
+
+model Comment {
+  id             String   @id @default(uuid())
+  comment_detail String
+  Rating         Rating[]
+}
+
+model AVG_Rate {
+  id        String @id @default(uuid())
+  rate_avg  Float
+  sum_stars Float
+  nb_rating Int
+  Film      Film[]
+}
+
+enum Gender {
+  male
+  female
+}

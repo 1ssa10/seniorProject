@@ -1,0 +1,8 @@
+-- DropForeignKey
+ALTER TABLE `film` DROP FOREIGN KEY `Film_AVG_RateId_fkey`;
+
+-- AlterTable
+ALTER TABLE `film` MODIFY `AVG_RateId` VARCHAR(191) NULL;
+
+-- AddForeignKey
+ALTER TABLE `Film` ADD CONSTRAINT `Film_AVG_RateId_fkey` FOREIGN KEY (`AVG_RateId`) REFERENCES `AVG_Rate`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
