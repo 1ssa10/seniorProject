@@ -19,7 +19,7 @@ model User {
   isAdmin    Boolean   @default(false)
   DOB        DateTime
   gender     Gender
-  Email      String    @unique
+  email      String    @unique
   created_at DateTime  @default(now())
   Rating     Rating[]
   Admin      Admin[]

@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-
+import Sidenav from "./components/SideNav";
+import Providers from "./components/Providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -11,7 +12,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Providers>
+          <div className="container mx-auto flex items-start sm:pr-4">
+            <Sidenav />
+            <div className="min-h-screen flex-grow border-x">{children}</div>
+          </div>
+        </Providers>
+      </body>
     </html>
   );
 }
