@@ -1,4 +1,4 @@
-import prisma from "@/app/lib/prisma.js";
+import prisma from "@/lib/prisma.js";
 import * as bcrypt from "bcrypt";
 import { DateTime } from "luxon";
 
@@ -16,6 +16,8 @@ export async function POST(request) {
       DOB: dob.toJSDate(),
       gender: body.gender,
       email: body.email,
+      image: body.image,
+      name: body.first_name + " " + body.last_name,
     },
   });
   const { password, ...result } = user;

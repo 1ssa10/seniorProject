@@ -1,4 +1,4 @@
-import prisma from "@/app/lib/prisma.js";
+import prisma from "@/lib/prisma.js";
 import * as bcrypt from "bcrypt";
 
 export async function POST(request) {
