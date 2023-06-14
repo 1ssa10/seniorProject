@@ -2,13 +2,19 @@ import { signOut } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-function onClickhandler(id) {
-  location.href = `/Film/${id} `;
+// function onClickhandler(id) {
+//   location.href = `/Film/${id} `;
+// }
+function HandlePosterClick(id) {
+  const url = `/Film/${id}`;
+  window.location.href = url;
 }
 
 function Filmposter() {
+  const router = useRouter("");
   const [posters, setPosters] = useState([]);
   useEffect(() => {
     async function fetchPosters() {
@@ -32,7 +38,9 @@ function Filmposter() {
               alt="Film Poster"
               width={280}
               height={420}
-              onClick={() => onClickhandler(poster.id)}
+              onClick={() => {
+                HandlePosterClick(poster.id);
+              }}
             />
             <p>{poster.title}</p>
           </div>
