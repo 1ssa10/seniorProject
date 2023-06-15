@@ -1,0 +1,13 @@
+.image-wrapper {
+  position: relative;
+  width: 280px;
+  height: 420px;
+}
+
+.image-wrapper > div {
+  position: unset !important;
+}
+
+.image-wrapper > div:before {
+  content: none !important;
+}

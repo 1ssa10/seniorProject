@@ -11,6 +11,8 @@ export async function POST(request) {
         select: {
           id: true,
           image: true,
+          first_name: true,
+          last_name: true,
         },
       },
     },
