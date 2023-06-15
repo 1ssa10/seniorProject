@@ -28,27 +28,26 @@ function Filmposter() {
       {cats.map((cat) => (
         <div key={cat.id}>
           <h2 className="mb-2 px-4 text-lg font-bold">{cat.catergory}</h2>
-          <ul className="flex flex-wrap space-x-0">
-            {cat.Films?.map((film) => (
-              <li
-                key={film.id}
-                className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
-              >
-                <div className="flex flex-col items-center">
-                  <Image
-                    src={film.image}
-                    alt="Film Poster"
-                    width={280}
-                    height={420}
-                    onClick={() => {
-                      HandlePosterClick(film.id);
-                    }}
-                  />
-                  <p>{film.title}</p>
+          <div className="film-container flex overflow-x-auto space-x-4">
+            <div className="film-list ">
+              {cat.Films?.map((film) => (
+                <div key={film.id} className=" flex-none w-30">
+                  <div className="film-item flex flex-col items-center">
+                    <Image
+                      src={film.image}
+                      alt="Film Poster"
+                      width={180}
+                      height={320}
+                      onClick={() => {
+                        HandlePosterClick(film.id);
+                      }}
+                    />
+                    <p>{film.title}</p>
+                  </div>
                 </div>
-              </li>
-            ))}
-          </ul>
+              ))}
+            </div>
+          </div>
         </div>
       ))}
     </>

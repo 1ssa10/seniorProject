@@ -25,3 +25,36 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.film-container {
+  overflow: hidden;
+  /* display: flex;
+  animation: scroll-film 150s linear infinite; */
+}
+
+.film-list {
+  display: flex;
+}
+.film-list:hover {
+  animation: scroll-film 150s linear infinite;
+}
+
+.film-item {
+  flex: 0 0 280px;
+  margin-right: 20px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.film-item:hover {
+  opacity: 1;
+}
+
+@keyframes scroll-film {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-280px * 4));
+  }
+}
