@@ -86,7 +86,7 @@ model Director {
 
 model Category {
   id        String @id @default(uuid())
-  catergory String
+  catergory String @unique
   Films     Film[]
 }
 

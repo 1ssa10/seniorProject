@@ -35,14 +35,12 @@ body {
 .film-list {
   display: flex;
 }
-.film-list:hover {
+/* .film-list:hover {
   animation: scroll-film 10s linear infinite;
   animation-delay: 2s;
 }
 @keyframes scroll-film {
-  /* to {
-    transform: rotateY(360deg);
-  } */
+
   0% {
     transform: translateX(0%);
   }
@@ -53,7 +51,7 @@ body {
   100% {
     transform: translateX(0%);
   }
-}
+} */
 /* styling for the#style-2 */
 #style-2::-webkit-scrollbar {
   width: 10px;
