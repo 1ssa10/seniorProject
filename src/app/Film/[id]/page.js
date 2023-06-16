@@ -9,7 +9,7 @@ function Page() {
   const id = url.split("/Film/")[1]; // Split the URL by "/Film/" and get the second element
   const [film, setFilm] = useState([]);
   const session = useSession();
-  console.log("ID:", id);
+
   useEffect(() => {
     async function fetchFilmDetails() {
       const res = await fetch("http://localhost:3000/api/FilmContant", {

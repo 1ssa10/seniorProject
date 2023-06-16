@@ -31,7 +31,6 @@ function SideNav() {
             <button onClick={() => signOut()}>Log Out</button>
           </li>
         )}
-        {console.log(session.data?.user.name)}
       </ul>
     </nav>
   );

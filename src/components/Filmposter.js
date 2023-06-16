@@ -17,7 +17,6 @@ function Filmposter() {
       const response = await fetch("http://localhost:3000/api/filmsPosters");
       const data = await response.json();
       setCats(data);
-      // console.log(data);
     }
 
     fetchCats();
@@ -28,11 +27,14 @@ function Filmposter() {
       {cats.map((cat) => (
         <div key={cat.id}>
           <h2 className="mb-2 px-4 text-lg font-bold">{cat.catergory}</h2>
-          <div className="film-container flex overflow-x-auto space-x-4">
+          <div
+            className="film-container  flex overflow-x-auto  scrollbar-track-gray-950 scrollbar-thumb-slate-900 space-x-4"
+            id="style-2"
+          >
             <div className="film-list ">
               {cat.Films?.map((film) => (
                 <div key={film.id} className=" flex-none w-30">
-                  <div className="film-item flex flex-col items-center">
+                  <div className="film-item flex flex-col items-center mt-2">
                     <Image
                       src={film.image}
                       alt="Film Poster"
@@ -42,8 +44,8 @@ function Filmposter() {
                         HandlePosterClick(film.id);
                       }}
                     />
-                    <p>{film.title}</p>
                   </div>
+                  <p>{film.title}</p>
                 </div>
               ))}
             </div>
