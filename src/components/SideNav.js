@@ -22,11 +22,7 @@ function SideNav() {
             </Link>
           </li>
         )}
-        {user == null ? (
-          <li>
-            <button onClick={() => signIn()}>Log In</button>
-          </li>
-        ) : (
+        {user == null ? null : (
           <li>
             <button onClick={() => signOut()}>Log Out</button>
           </li>

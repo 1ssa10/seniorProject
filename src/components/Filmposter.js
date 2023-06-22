@@ -13,7 +13,7 @@ function HandlePosterClick(id) {
 
 function Filmposter() {
   const [cats, setCats] = useState([]);
-  const [isHovered, setIsHovered] = useState(false);
+
   useEffect(() => {
     async function fetchCats() {
       const response = await fetch("http://localhost:3000/api/filmsPosters");
@@ -23,6 +23,14 @@ function Filmposter() {
 
     fetchCats();
   }, []);
+  const handleListHover = (catId, isHovered) => {
+    setCats((prevCats) => {
+      const updatedCats = prevCats.map((cat) =>
+        cat.id === catId ? { ...cat, isHovered } : cat
+      );
+      return updatedCats;
+    });
+  };
 
   return (
     <>
@@ -31,15 +39,19 @@ function Filmposter() {
           <h2 className="mb-2 px-4 text-lg font-bold text-center text-red-900">
             {cat.catergory}
           </h2>
-          <Marquee play={isHovered ? true : false} autoFill>
-            <div
-              className="film-container  flex overflow-x  scrollbar-track-gray-950 scrollbar-thumb-slate-900 space-x-4"
-              id="style-2"
-            >
+
+          <div
+            className="film-container  flex overflow-x : auto  scrollbar-track-gray-950 scrollbar-thumb-slate-900 space-x-4"
+            id="style-2"
+          >
+            <Marquee play={cat.isHovered ? true : false} autoFill>
               <div
                 className="film-list "
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                tabIndex="0"
+                onMouseOver={() => handleListHover(cat.id, true)}
+                onMouseOut={() => handleListHover(cat.id, false)}
+                onFocus={() => handleListHover(cat.id, true)}
+                onBlur={() => handleListHover(cat.id, false)}
               >
                 {cat.Films?.map((film) => (
                   <div key={film.id} className=" flex-none w-30">
@@ -58,8 +70,8 @@ function Filmposter() {
                   </div>
                 ))}
               </div>
-            </div>
-          </Marquee>
+            </Marquee>
+          </div>
         </div>
       ))}
     </>
