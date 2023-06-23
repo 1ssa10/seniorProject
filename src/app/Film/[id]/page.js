@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 
 function Page() {
   const url = window.location.href;
-  const id = url.split("/Film/")[1];
-
+  const id = url.split("/Film/")[1]; // Split the URL by "/Film/" and get the second element
   const [film, setFilm] = useState([]);
   const session = useSession();
 
