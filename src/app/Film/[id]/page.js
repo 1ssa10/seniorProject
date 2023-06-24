@@ -1,13 +1,14 @@
 "use client";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { usePathname, useSearchParams } from "next/navigation";
+
 import { useEffect, useState } from "react";
 
-function Page() {
-  const url = window.location.href;
-  const id = url.split("/Film/")[1];
-
+function Page({ params }) {
+  // const url = window.location.href;
+  // const id = url.split("/Film/")[1];
+  const id = params.id;
+  console.log(params.id);
   const [film, setFilm] = useState([]);
   const session = useSession();
 
@@ -33,6 +34,7 @@ function Page() {
     <div className="flex">
       <div className="mr-4">
         <p>{film.title}</p>
+
         <Image src={film?.image} alt="Film Poster" width={280} height={420} />
       </div>
       <div className="flex flex-col justify-end">

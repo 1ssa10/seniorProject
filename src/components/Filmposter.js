@@ -13,6 +13,7 @@ function HandlePosterClick(id) {
 
 function Filmposter() {
   const [cats, setCats] = useState([]);
+  // const [direction, setDirection] = useState(false);
 
   useEffect(() => {
     async function fetchCats() {
@@ -31,10 +32,16 @@ function Filmposter() {
       return updatedCats;
     });
   };
+  const directionHnadler = () => {
+    setDirection(!direction);
+  };
+  const direction = cats.map((cat, index) => {
+    return index % 2 === 0 ? "left" : "right";
+  });
 
   return (
     <>
-      {cats.map((cat) => (
+      {cats.map((cat, index) => (
         <div key={cat.id}>
           <h2 className="mb-2 px-4 text-lg font-bold text-center text-red-900">
             {cat.catergory}
@@ -44,7 +51,12 @@ function Filmposter() {
             className="film-container  flex overflow-x : auto  scrollbar-track-gray-950 scrollbar-thumb-slate-900 space-x-4"
             id="style-2"
           >
-            <Marquee play={cat.isHovered ? true : false} autoFill>
+            <Marquee
+              play={cat.isHovered ? false : true}
+              direction={direction[index]}
+              autoFill
+              speed={25}
+            >
               <div
                 className="film-list "
                 tabIndex="0"
