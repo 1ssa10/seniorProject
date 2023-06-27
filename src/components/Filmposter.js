@@ -32,9 +32,9 @@ function Filmposter() {
       return updatedCats;
     });
   };
-  const directionHnadler = () => {
-    setDirection(!direction);
-  };
+  // const directionHnadler = () => {
+  //   setDirection(!direction);
+  // };
   const direction = cats.map((cat, index) => {
     return index % 2 === 0 ? "left" : "right";
   });

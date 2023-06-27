@@ -1,7 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-
+import Loading from "./loading";
 import { useEffect, useState } from "react";
 
 function Page({ params }) {
@@ -23,6 +23,13 @@ function Page({ params }) {
           id: id,
         }),
       });
+      // if (!res.ok) throw new Error("connection problems");
+      // return new Promise((resolve) => {
+      //   setTimeout(() => {
+      //     const data = res.json();
+      //     setFilm(data);
+      //   }, 3000);
+      // });
       const data = await res.json();
       setFilm(data);
     }
@@ -32,6 +39,8 @@ function Page({ params }) {
 
   return (
     <div className="flex">
+      <h1>hello to the film section</h1>
+
       <div className="mr-4">
         <p>{film.title}</p>
 
