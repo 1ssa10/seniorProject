@@ -16,6 +16,7 @@ function Page({ params }) {
   const session = useSession();
   const [rated, setRated] = useState(0);
   const [inputVAlue, setInputValue] = useState("");
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     async function fetchFilmDetails() {
@@ -32,7 +33,22 @@ function Page({ params }) {
       const data = await res.json();
       setFilm(data);
     }
+    async function fetchComments() {
+      const res = await fetch("http://localhost:3000/api/fetchcomments", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+        }),
+      });
+      const data = await res.json();
+      setComments(data);
+    }
+
     fetchFilmDetails();
+    fetchComments();
   }, [id]);
 
   const Commenting = async (user_id, film_id, nb_stars, comment_d) => {
@@ -52,6 +68,20 @@ function Page({ params }) {
     } catch (error) {
       console.error("Error:", error);
     }
+    async function fetchComments() {
+      const res = await fetch("http://localhost:3000/api/fetchcomments", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+        }),
+      });
+      const data = await res.json();
+      setComments(data);
+    }
+    fetchComments();
   };
 
   if (session.status !== "authenticated") return;
@@ -119,7 +149,11 @@ function Page({ params }) {
           {console.log(session.data.user.id)}
         </div>
       ) : null}
-      <div></div>
+      <div>
+        {comments?.map((com) => (
+          <div key={com.commentId}>{com.comment.comment_detail}</div>
+        ))}
+      </div>
     </form>
   );
 }
