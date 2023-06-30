@@ -28,18 +28,31 @@ function Page({ params }) {
           id: id,
         }),
       });
-      // if (!res.ok) throw new Error("connection problems");
-      // return new Promise((resolve) => {
-      //   setTimeout(() => {
-      //     const data = res.json();
-      //     setFilm(data);
-      //   }, 3000);
-      // });
+
       const data = await res.json();
       setFilm(data);
     }
     fetchFilmDetails();
   }, [id]);
+
+  const Commenting = async (user_id, film_id, nb_stars, comment_d) => {
+    try {
+      const res = await fetch("http://localhost:3000/api/Rating", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: user_id,
+          filmid: film_id,
+          nbstars: nb_stars,
+          comment: comment_d,
+        }),
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   if (session.status !== "authenticated") return;
 
@@ -83,26 +96,30 @@ function Page({ params }) {
       <button type="submit" onClick={() => alert("123")}>
         submit
       </button>
-      <div className=" grid place-items-center">
-        <div class="py-2 px-4 mb-4   bg-white rounded-lg rounded-t-lg border border-gray-200">
-          <label for="comment" class="sr-only">
-            Your comment
-          </label>
-          <textarea
-            className="px-0 h-auto w-96 items-center text-sm text-gray-900 resize-none border-0 focus:ring-0 focus:outline-none"
-            placeholder="Write a comment..."
-            required
-            value={inputVAlue}
-            onChange={(e) => setInputValue(e.target.value)}
-          ></textarea>
+      {rated !== 0 ? (
+        <div className=" grid place-items-center">
+          <div className="py-2 px-4 mb-4   bg-white rounded-lg rounded-t-lg border border-gray-200">
+            <textarea
+              className="px-0 h-auto w-96 items-center text-sm text-gray-900 resize-none border-0 focus:ring-0 focus:outline-none"
+              placeholder="Write a comment..."
+              required
+              value={inputVAlue}
+              onChange={(e) => setInputValue(e.target.value)}
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+            onClick={() =>
+              Commenting(session.data.user.id, id, rated, inputVAlue)
+            }
+          >
+            Post comment
+          </button>
+          {console.log(session.data.user.id)}
         </div>
-        <button
-          type="submit"
-          className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
-        >
-          Post comment
-        </button>
-      </div>
+      ) : null}
+      <div></div>
     </form>
   );
 }
