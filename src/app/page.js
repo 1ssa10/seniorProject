@@ -10,7 +10,7 @@ import Loading from "./loading";
 export default function Home() {
   const session = useSession();
 
-  if (session.status !== "authenticated") return <Loading />;
+  // if (session.status !== "authenticated") return ;
 
   return (
     <>
@@ -19,7 +19,7 @@ export default function Home() {
       </header> */}
 
       <SearchBar />
-      {session.status !== "authenticated" ? <SignINComponent /> : null}
+      <SignINComponent />
       <Filmposter />
     </>
   );

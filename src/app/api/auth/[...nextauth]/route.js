@@ -47,6 +47,24 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        // Add the 'id' property to the session user object
+        session.user.id = token.uid || null;
+      }
+      return session;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id || null;
+      }
+      return token;
+    },
+  },
+  session: {
+    strategy: "jwt",
+  },
 });
 
 export { handler as GET, handler as POST };

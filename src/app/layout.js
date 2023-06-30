@@ -1,8 +1,11 @@
+"use client";
+
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Sidenav from "../components/SideNav";
 import Providers from "../components/Providers";
 import Navbar from "@/components/Navbar";
+import { ThemeProvider } from "@material-tailwind/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -12,6 +15,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    // <ThemeProvider>
     <html lang="en">
       <body className={inter.className}>
         <Providers>
@@ -26,5 +30,6 @@ export default function RootLayout({ children }) {
         </Providers>
       </body>
     </html>
+    // </ThemeProvider>
   );
 }

@@ -1,10 +1,12 @@
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 function SignINComponent() {
   const [films, setfilms] = useState([]);
   const [randomfilm, setrandomfilm] = useState([]);
+  const session = useSession();
+
   useEffect(() => {
     async function fetchingFilms() {
       const response = await fetch("http://localhost:3000/api/Films");
@@ -22,6 +24,7 @@ function SignINComponent() {
     getRandomfilm();
   }, [films]);
 
+  if (session.status === "authenticated") return;
   return (
     <>
       <div className="flex justify-center">
