@@ -105,7 +105,7 @@ model Rating {
 
 model Comment {
   id             String   @id @default(uuid())
-  comment_detail String
+  comment_detail String   @db.LongText()
   Rating         Rating[]
 }
 

@@ -15,21 +15,21 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    // <ThemeProvider>
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers>
-          <div className="container mx-auto flex items-start sm:pr-4">
-            {/* <Sidenav /> */}
+    <ThemeProvider>
+      <html lang="en">
+        <body>
+          <Providers>
+            <div className="container mx-auto flex items-start sm:pr-4">
+              {/* <Sidenav /> */}
 
-            <div className=" min-h-fit  mx-1 flex-grow border-x">
-              <Navbar />
-              {children}
+              <div className=" min-h-fit  mx-1 flex-grow border-x">
+                <Navbar />
+                {children}
+              </div>
             </div>
-          </div>
-        </Providers>
-      </body>
-    </html>
-    // </ThemeProvider>
+          </Providers>
+        </body>
+      </html>
+    </ThemeProvider>
   );
 }

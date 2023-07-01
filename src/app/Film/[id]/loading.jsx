@@ -1,5 +1,7 @@
 import React from "react";
 
 export default function Loading() {
-  return <h1> Loading...</h1>;
+  return (
+    <h1> ..................................................................</h1>
+  );
 }

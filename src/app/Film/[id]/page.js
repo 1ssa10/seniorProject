@@ -7,6 +7,8 @@ import SignINComponent from "@/components/SignINComponent";
 import Ratingstars from "@/components/Ratingstars";
 import { Rating, Typography } from "@material-tailwind/react";
 import { every } from "lodash";
+import ProfileImage from "@/components/ProfileImage";
+import { DateTime } from "luxon";
 function Page({ params }) {
   // const url = window.location.href;
   // const id = url.split("/Film/")[1];
@@ -52,22 +54,22 @@ function Page({ params }) {
   }, [id]);
 
   const Commenting = async (user_id, film_id, nb_stars, comment_d) => {
-    try {
-      const res = await fetch("http://localhost:3000/api/Rating", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userid: user_id,
-          filmid: film_id,
-          nbstars: nb_stars,
-          comment: comment_d,
-        }),
-      });
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    // try {
+    const res = await fetch("http://localhost:3000/api/Rating", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: user_id,
+        filmid: film_id,
+        nbstars: nb_stars,
+        comment: comment_d,
+      }),
+    });
+    // } catch (error) {
+    //   console.error("Error:", error);}
+
     async function fetchComments() {
       const res = await fetch("http://localhost:3000/api/fetchcomments", {
         method: "POST",
@@ -83,6 +85,7 @@ function Page({ params }) {
     }
     fetchComments();
   };
+  let now = new Date();
 
   if (session.status !== "authenticated") return;
 
@@ -92,7 +95,7 @@ function Page({ params }) {
         <div className="mr-4">
           <p>{film?.title}</p>
 
-          <Image src={film?.image} alt="Film Poster" width={280} height={420} />
+          <img src={film?.image} alt="film poster" width={280} height={420} />
         </div>
         <div className="flex flex-col justify-end">
           {film?.Actors?.map((actor) => (
@@ -121,11 +124,8 @@ function Page({ params }) {
         <Typography color="blue-gray" className="font-medium text-red-700">
           {rated}.0 Rated
         </Typography>
-        <input type="text" className=" text-black" />
       </div>
-      <button type="submit" onClick={() => alert("123")}>
-        submit
-      </button>
+
       {rated !== 0 ? (
         <div className=" grid place-items-center">
           <div className="py-2 px-4 mb-4   bg-white rounded-lg rounded-t-lg border border-gray-200">
@@ -139,7 +139,7 @@ function Page({ params }) {
           </div>
           <button
             type="submit"
-            className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+            className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-primary-200  hover:bg-primary-800"
             onClick={() =>
               Commenting(session.data.user.id, id, rated, inputVAlue)
             }
@@ -149,10 +149,51 @@ function Page({ params }) {
           {console.log(session.data.user.id)}
         </div>
       ) : null}
-      <div>
-        {comments?.map((com) => (
-          <div key={com.commentId}>{com.comment.comment_detail}</div>
-        ))}
+      <div className=" flex justify-center">
+        <div className=" grid-cols-1 w-1/2">
+          {comments?.map((com) => (
+            <div
+              key={com?.commentId}
+              className=" border-4 border-blue-gray-900 rounded-3xl p-3 m-2"
+            >
+              {parseInt(now - new Date(com.date)) >= 1000 &&
+                parseInt(now - new Date(com.date)) < 60000 && (
+                  <span>
+                    {parseInt((now - new Date(com.date)) / 1000)} seconds
+                  </span>
+                )}
+              {parseInt((now - new Date(com.date)) / 1000) >= 60 &&
+                parseInt((now - new Date(com.date)) / 1000) < 3600 && (
+                  <span>
+                    {parseInt((now - new Date(com.date)) / 60000)} minutes
+                  </span>
+                )}
+              {parseInt((now - new Date(com.date)) / 60000) >= 3600 &&
+                parseInt((now - new Date(com.date)) / 60000) < 86400 && (
+                  <span>
+                    {parseInt((now - new Date(com.date)) / 3600000)} hours
+                  </span>
+                )}
+              {parseInt((now - new Date(com.date)) / 3600000) >= 86400 && (
+                <span>
+                  {parseInt((now - new Date(com.date)) / 86400000)} days
+                </span>
+              )}
+
+              <Rating
+                unratedColor="red"
+                ratedColor="red"
+                value={com.nb_stars}
+                readonly
+                className=" flex justify-end"
+              />
+              <div className="flex">
+                <ProfileImage src={com.rater?.image} /> {com.rater.name}{" "}
+              </div>
+              <div className="break-all">{com.comment?.comment_detail}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </form>
   );

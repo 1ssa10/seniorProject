@@ -12,6 +12,15 @@ export async function POST(request) {
           comment_detail: true,
         },
       },
+      rater: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+    orderBy: {
+      date: "desc",
     },
   });
   return new Response(JSON.stringify(comments));

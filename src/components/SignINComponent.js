@@ -23,16 +23,21 @@ function SignINComponent() {
     }
     getRandomfilm();
   }, [films]);
+  // const root = document.documentElement;
+  // root.style.setProperty("--image-url", `url(${randomfilm?.image})`);
 
   if (session.status === "authenticated") return;
   return (
     <>
       <div className="flex justify-center">
         <div className=" my-5 px-4 py-4   rounded-3xl border boreder-lg border-red-700">
+          {console.log(randomfilm?.image)}
           <div
-            className="signindev bg-contain bg-no-repeat bg-right"
+            className="signindev  bg-contain bg-no-repeat bg-right"
             style={{
-              backgroundImage: `url(${randomfilm?.image})`,
+              backgroundImage: randomfilm?.image
+                ? `url(${randomfilm?.image})`
+                : null,
             }}
           >
             <h1 className="text-2xl flex justify-center text-gray-700 font-sans font-bold">
