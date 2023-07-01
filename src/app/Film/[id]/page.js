@@ -86,6 +86,7 @@ function Page({ params }) {
     fetchComments();
   };
   let now = new Date();
+  let timedef;
 
   if (session.status !== "authenticated") return;
 
@@ -156,29 +157,24 @@ function Page({ params }) {
               key={com?.commentId}
               className=" border-4 border-blue-gray-900 rounded-3xl p-3 m-2"
             >
-              {parseInt(now - new Date(com.date)) >= 1000 &&
+              {parseInt(now - new Date(com.date)) >= 0 &&
                 parseInt(now - new Date(com.date)) < 60000 && (
-                  <span>
-                    {parseInt((now - new Date(com.date)) / 1000)} seconds
-                  </span>
+                  <span>{parseInt((now - new Date(com.date)) / 1000)} s</span>
                 )}
               {parseInt((now - new Date(com.date)) / 1000) >= 60 &&
                 parseInt((now - new Date(com.date)) / 1000) < 3600 && (
+                  <span>{parseInt((now - new Date(com.date)) / 60000)} m</span>
+                )}
+              {parseInt((now - new Date(com.date)) / 60000) >= 60 &&
+                parseInt((now - new Date(com.date)) / 3600000) < 24 && (
                   <span>
-                    {parseInt((now - new Date(com.date)) / 60000)} minutes
+                    {parseInt((now - new Date(com.date)) / 3600000)} h
                   </span>
                 )}
-              {parseInt((now - new Date(com.date)) / 60000) >= 3600 &&
-                parseInt((now - new Date(com.date)) / 60000) < 86400 && (
-                  <span>
-                    {parseInt((now - new Date(com.date)) / 3600000)} hours
-                  </span>
-                )}
-              {parseInt((now - new Date(com.date)) / 3600000) >= 86400 && (
-                <span>
-                  {parseInt((now - new Date(com.date)) / 86400000)} days
-                </span>
+              {parseInt((now - new Date(com.date)) / 3600000) >= 24 && (
+                <span>{parseInt((now - new Date(com.date)) / 86400000)} d</span>
               )}
+              {console.log(parseInt((now - new Date(com.date)) / 3600000))}
 
               <Rating
                 unratedColor="red"
