@@ -92,6 +92,17 @@ function Page({ params }) {
 
   return (
     <form onSubmit={(event) => event.preventDefault()}>
+      {film?.trailer && (
+        <iframe
+          width="560"
+          height="315"
+          src={film.trailer}
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen="allowfullscreen"
+        ></iframe>
+      )}
       <div className="flex">
         <div className="mr-4">
           <p>{film?.title}</p>

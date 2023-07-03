@@ -58,6 +58,7 @@ model Film {
   ACT_Rate        AVG_Rate?  @relation(fields: [AVG_RateId], references: [id])
   AVG_RateId      String?
   Rating          Rating[]
+  trailer         String?
 }
 
 model Actor {
