@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 
 export async function POST(request) {
   const body = await request.json();
-  await prisma.rating.create({
+  const rate = await prisma.rating.create({
     data: {
       rater: {
         connect: {
@@ -19,4 +19,5 @@ export async function POST(request) {
       date: new Date(),
     },
   });
+  return new Response(JSON.stringify(rate));
 }
