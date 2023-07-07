@@ -67,18 +67,20 @@ function Filmposter() {
               >
                 {cat.Films?.map((film) => (
                   <div key={film.id} className=" flex-none w-30">
-                    <div className="film-item flex flex-col items-center mt-2">
-                      <Image
-                        src={film.image}
-                        alt="Film Poster"
-                        width={180}
-                        height={320}
-                        onClick={() => {
-                          HandlePosterClick(film.id);
-                        }}
-                      />
-                    </div>
-                    <p>{film.title}</p>
+                    <Link href={`/Film/${film.id}`}>
+                      <div className="film-item flex flex-col items-center mt-2">
+                        <Image
+                          src={film.image}
+                          alt="Film Poster"
+                          width={180}
+                          height={320}
+                          // onClick={() => {
+                          //   HandlePosterClick(film.id);
+                          // }}
+                        />
+                      </div>
+                      <p>{film.title}</p>
+                    </Link>
                   </div>
                 ))}
               </div>

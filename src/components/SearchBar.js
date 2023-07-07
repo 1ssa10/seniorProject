@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 function SearchBar() {
@@ -71,16 +72,18 @@ function SearchBar() {
                       key={film.id}
                       className="opacity-50 transform hover:opacity-100 hover:scale-105 transition-opacity duration-300 relative z-10"
                     >
-                      <Image
-                        src={film.image}
-                        width={80}
-                        height={150}
-                        alt="searched film"
-                        onClick={() =>
-                          (window.location.href = `/Film/${film.id}`)
-                        }
-                      />
-                      <span>{film.title}</span>
+                      <Link href={`/Film/${film.id}`}>
+                        <Image
+                          src={film.image}
+                          width={80}
+                          height={150}
+                          alt="searched film"
+                          // onClick={() =>
+                          //   (window.location.href = `/Film/${film.id}`)
+                          // }
+                        />
+                        <span>{film.title}</span>
+                      </Link>
                     </div>
                   ))}
                 </div>
