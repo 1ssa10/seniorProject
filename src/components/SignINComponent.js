@@ -31,7 +31,7 @@ function SignINComponent() {
     <>
       <div className="flex justify-center">
         <div className=" my-5 px-4 py-4   rounded-3xl border boreder-lg border-red-700">
-          {console.log(randomfilm?.image)}
+          {/* {console.log(randomfilm?.image)} */}
           <div
             className="signindev  bg-contain bg-no-repeat bg-right"
             style={{

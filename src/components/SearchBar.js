@@ -25,7 +25,7 @@ function SearchBar() {
 
     fetchSerachedFilm();
   }, [searchitem]);
-  console.log(films);
+  // console.log(films);
   return (
     <div className=" relative   mt-4  items-center justify-center  mx-auto ">
       <div className="flex items-center justify-center  ">

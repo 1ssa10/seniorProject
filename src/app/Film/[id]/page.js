@@ -13,7 +13,7 @@ function Page({ params }) {
   // const url = window.location.href;
   // const id = url.split("/Film/")[1];
   const id = params.id;
-  console.log(params.id);
+  // console.log(params.id);
   const [film, setFilm] = useState([]);
   const session = useSession();
   const [rated, setRated] = useState(0);
@@ -158,7 +158,7 @@ function Page({ params }) {
           >
             Post comment
           </button>
-          {console.log(session.data.user.id)}
+          {/* {console.log(session.data.user.id)} */}
         </div>
       ) : null}
       <div className=" flex justify-center">
@@ -185,7 +185,7 @@ function Page({ params }) {
               {parseInt((now - new Date(com.date)) / 3600000) >= 24 && (
                 <span>{parseInt((now - new Date(com.date)) / 86400000)} d</span>
               )}
-              {console.log(parseInt((now - new Date(com.date)) / 3600000))}
+              {/* {console.log(parseInt((now - new Date(com.date)) / 3600000))} */}
 
               <Rating
                 unratedColor="red"

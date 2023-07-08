@@ -2,6 +2,7 @@ import NextAuth from "next-auth/next";
 import { NextAuthOptions } from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import prisma from "@/lib/prisma";
 
 const handler = NextAuth({
   providers: [
@@ -45,9 +46,43 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      scope: "profile email",
     }),
   ],
   callbacks: {
+    async signIn({ account, profile }) {
+      if (account.provider === "google") {
+        console.log(2 + 1);
+        const existingUser = await prisma.user.findUnique({
+          where: { email: profile.email },
+        });
+
+        console.log(existingUser ? existingUser : "no user");
+        console.log(profile.sub);
+        if (!existingUser) {
+          const user = await prisma.user.create({
+            data: {
+              id: profile.sub,
+              username: "gmail user",
+              name: profile.name,
+              image: profile.image,
+              email: profile.email,
+              password: "xxx",
+              first_name: "mahmoud",
+              last_name: "issa",
+              gender: "male",
+              DOB: new Date("2002-8-6"),
+
+              // Set any other relevant fields
+            },
+          });
+          return user;
+        }
+        return profile.email_verified && profile.email.endsWith("@gmail.com");
+      }
+      return true; // Do different verification for other providers that don't have `email_verified`
+    },
+
     session: async ({ session, token }) => {
       if (session?.user) {
         // Add the 'id' property to the session user object
