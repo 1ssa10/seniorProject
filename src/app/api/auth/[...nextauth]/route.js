@@ -3,6 +3,7 @@ import { NextAuthOptions } from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/lib/prisma";
+import axios from "axios";
 
 const handler = NextAuth({
   providers: [
@@ -46,7 +47,7 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      scope: "profile email",
+      scope: "profile email https://www.googleapis.com/auth/user.birthday.read",
     }),
   ],
   callbacks: {
@@ -59,19 +60,25 @@ const handler = NextAuth({
 
         console.log(existingUser ? existingUser : "no user");
         console.log(profile.sub);
+        console.log(profile.name);
+        console.log(profile.email);
+        const imageUrl = await fetchProfileImage(
+          profile.sub,
+          account.access_token
+        );
+
+        console.log(imageUrl);
+
         if (!existingUser) {
           const user = await prisma.user.create({
             data: {
               id: profile.sub,
-              username: "gmail user",
+
               name: profile.name,
-              image: profile.image,
+              image: imageUrl,
               email: profile.email,
-              password: "xxx",
-              first_name: "mahmoud",
-              last_name: "issa",
-              gender: "male",
-              DOB: new Date("2002-8-6"),
+
+              DOB: new Date(profile?.birthDate || null),
 
               // Set any other relevant fields
             },
@@ -101,5 +108,16 @@ const handler = NextAuth({
     strategy: "jwt",
   },
 });
+async function fetchProfileImage(userId, accessToken) {
+  try {
+    const response = await axios.get(
+      `https://www.googleapis.com/userinfo/v2/me?fields=picture&access_token=${accessToken}`
+    );
+    return response.data.picture || null;
+  } catch (error) {
+    console.log("Error fetching profile image:", error);
+    return null;
+  }
+}
 
 export { handler as GET, handler as POST };
