@@ -78,7 +78,7 @@ const handler = NextAuth({
               image: imageUrl,
               email: profile.email,
 
-              DOB: new Date(profile?.birthDate || null),
+              DOB: new Date(profile?.birthDate),
 
               // Set any other relevant fields
             },
