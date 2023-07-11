@@ -53,7 +53,6 @@ const handler = NextAuth({
   callbacks: {
     async signIn({ account, profile }) {
       if (account.provider === "google") {
-        console.log(2 + 1);
         const existingUser = await prisma.user.findUnique({
           where: { email: profile.email },
         });

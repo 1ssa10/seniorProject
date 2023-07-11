@@ -1,5 +1,6 @@
 "use client";
 import Filmposter from "@/components/Filmposter";
+
 import Link from "next/link";
 import React from "react";
 import { useState } from "react";
@@ -8,23 +9,66 @@ import DatePicker from "react-datepicker";
 // import { Datepicker } from "flowbite";
 
 function page() {
-  const [value, setValue] = useState(new Date());
-  const handleValueChange = (newValue) => {
-    console.log("newValue:", newValue);
-    setValue(newValue);
-  };
-  return (
-    // <div className=" flex items-center justify-center h-screen">
-    //   <div className=" bg-black relative overflow-hidden">
-    //     <div className=" absolute backdrop-blur-sm bg-transparent h-full w-full overflow-hidden z-10">
-    //       {/* <div className="flex justify-center items-center h-full">123123</div> */}
-    //     </div>
-    //     <div className="rotate-45 overflow-hidden">
-    //       <Filmposter />
-    //     </div>
-    //   </div>
+  const [f_name, setfName] = useState("");
+  const [l_name, setlName] = useState("");
+  const [userName, setuserNAme] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("male");
+  const [pass, setPass] = useState("");
+  const [compass, setCompass] = useState("");
+  const [dob, setDob] = useState("");
+  const [acceptterms, setAcceptterms] = useState(false);
+  const [errors, setErrors] = useState({});
 
-    // <div className=" absolute z-10 w-1/2">
+  const validation = () => {
+    const errors = {};
+
+    if (!f_name) {
+      errors.f_name = "First name is required";
+    }
+
+    if (!l_name) {
+      errors.l_name = "Last name is required";
+    }
+
+    if (!userName) {
+      errors.userName = "Username is required";
+    }
+
+    if (!email) {
+      errors.email = "Email is required";
+    }
+
+    if (!pass) {
+      errors.pass = "Password is required";
+    } else if (pass.length < 8) {
+      errors.pass = "Password must be at least 8 characters long";
+    }
+
+    if (!compass) {
+      errors.compass = "Compass direction is required";
+    }
+
+    if (!dob) {
+      errors.dob = "Date of birth is required";
+    }
+
+    return errors;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const errors = validation();
+    if (Object.keys(errors).length === 0) {
+      // Form is valid, submit the data
+      // Your logic for form submission here
+      console.log("Form submitted");
+    } else {
+      // Form validation failed, update the errors state
+      setErrors(errors);
+    }
+  };
+
+  return (
     <section className="  bg-transparent dark:bg-gray-900 ">
       <div className=" flex flex-col items-center px-6 py-8 mx-auto md:h-screen lg:pt-7">
         <Link
@@ -45,7 +89,11 @@ function page() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-red-700 md:text-2xl">
               Create an account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form
+              className="space-y-4 md:space-y-6"
+              action="#"
+              onSubmit={handleSubmit}
+            >
               <div className=" grid-cols-2 flex">
                 <div>
                   <label
@@ -58,10 +106,16 @@ function page() {
                     type="text"
                     name="f_Name"
                     id="f_Name"
+                    value={f_name}
+                    onChange={(e) => setfName(e.target.value)}
                     className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     placeholder="Enter your FirstName"
-                    required=""
+                    pattern="^[A-Za-z][a-z]{1,}+/s?$"
+                    required
                   />
+                  {errors.f_name && (
+                    <p className="text-red-600">{errors.f_name}</p>
+                  )}
                 </div>
                 &nbsp; &nbsp;
                 <div>
@@ -75,9 +129,11 @@ function page() {
                     type="text"
                     name="l_Name"
                     id="l_Name"
+                    value={l_name}
+                    onChange={(e) => setlName(e.target.value)}
                     className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                     placeholder="Enter your LastName"
-                    required=""
+                    required
                   />
                 </div>
               </div>
@@ -92,9 +148,11 @@ function page() {
                   type="text"
                   name="userName"
                   id="userName"
+                  value={userName}
+                  onChange={(e) => setuserNAme(e.target.value)}
                   placeholder="Enter your userName"
                   className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  required=""
+                  required
                 />
               </div>
               <div>
@@ -108,10 +166,31 @@ function page() {
                   type="email"
                   name="email"
                   id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="name@company.com"
-                  required=""
+                  required
                 />
+              </div>
+              <div>
+                <label
+                  htmlFor="gender"
+                  className="block mb-2 text-sm font-medium text-red-700"
+                >
+                  Your Gender
+                </label>
+                <select
+                  id="gender"
+                  className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  placeholder="what is your gender"
+                  required
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
               </div>
               <div>
                 <label
@@ -124,9 +203,11 @@ function page() {
                   type="password"
                   name="password"
                   id="password"
+                  value={pass}
+                  onChange={(e) => setPass(e.target.value)}
                   placeholder="xxx"
                   className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  required=""
+                  required
                 />
               </div>
               <div>
@@ -140,21 +221,30 @@ function page() {
                   type="password"
                   name="confirm-password"
                   id="confirm-password"
+                  value={compass}
+                  onChange={(e) => setCompass(e.target.value)}
                   placeholder="xxx"
                   className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  required=""
+                  required
                 />
               </div>
 
-              <div className="w-full flex flex-col items-center justify-center mt-4">
-                <label htmlFor="dob" className="text-xl font-bold">
+              <div>
+                <label
+                  htmlFor="dob"
+                  className="block mb-2 text-sm font-medium text-red-700"
+                >
                   Date of Birth
                 </label>
                 <input
                   type="date"
                   id="dob"
+                  value={dob}
+                  onChange={(e) => setDob(e.target.value)}
                   className="bg-gray-700 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  required
                 />
+                {dob}
               </div>
 
               <div className="flex items-start">
@@ -163,8 +253,9 @@ function page() {
                     id="terms"
                     aria-describedby="terms"
                     type="checkbox"
+                    onChange={() => setAcceptterms(!acceptterms)}
                     className="w-4 h-4 border border-gray-300 rounded bg-gray-700 placeholder:text-gray-300 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    required=""
+                    required
                   />
                 </div>
 
@@ -184,8 +275,20 @@ function page() {
                 </div>
               </div>
               <button
+                disabled={!acceptterms ? true : false}
                 type="submit"
-                className="w-full text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                onClick={() =>
+                  validation(
+                    f_name,
+                    l_name,
+                    userName,
+                    email,
+                    gender,
+                    pass,
+                    compass
+                  )
+                }
+                className="w-full text-white  bg-red-600 disabled:bg-gray-700 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
                 Create an account
               </button>
@@ -203,8 +306,6 @@ function page() {
         </div>
       </div>
     </section>
-    //   </div>
-    // </div>
   );
 }
 

@@ -72,8 +72,8 @@ function Filmposter() {
                         <Image
                           src={film.image}
                           alt="Film Poster"
-                          width={180}
-                          height={320}
+                          width={160}
+                          height={300}
                           // onClick={() => {
                           //   HandlePosterClick(film.id);
                           // }}
