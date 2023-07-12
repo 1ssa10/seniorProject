@@ -58,6 +58,7 @@ function page() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validation();
+    console.log(errors);
     if (Object.keys(errors).length === 0) {
       // Form is valid, submit the data
       // Your logic for form submission here
@@ -108,13 +109,16 @@ function page() {
                     id="f_Name"
                     value={f_name}
                     onChange={(e) => setfName(e.target.value)}
-                    className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    className={`bg-gray-700 placeholder:text-gray-900 border ${
+                      errors.f_name
+                        ? " border-red-700 border-4"
+                        : "border-gray-300"
+                    } text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5`}
                     placeholder="Enter your FirstName"
                     pattern="^[A-Za-z][a-z]{1,}+/s?$"
-                    required
                   />
                   {errors.f_name && (
-                    <p className="text-red-600">{errors.f_name}</p>
+                    <p className="text-red-600">!{errors.f_name}</p>
                   )}
                 </div>
                 &nbsp; &nbsp;
@@ -131,10 +135,16 @@ function page() {
                     id="l_Name"
                     value={l_name}
                     onChange={(e) => setlName(e.target.value)}
-                    className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    className={`bg-gray-700 placeholder:text-gray-900 border ${
+                      errors.l_name
+                        ? " border-red-700 border-4"
+                        : "border-gray-300"
+                    } text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5`}
                     placeholder="Enter your LastName"
-                    required
                   />
+                  {errors.l_name && (
+                    <p className="text-red-600">!{errors.l_name}</p>
+                  )}
                 </div>
               </div>
               <div>
@@ -151,9 +161,15 @@ function page() {
                   value={userName}
                   onChange={(e) => setuserNAme(e.target.value)}
                   placeholder="Enter your userName"
-                  className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  required
+                  className={`bg-gray-700 placeholder:text-gray-900 border ${
+                    errors.userName
+                      ? " border-red-700 border-4"
+                      : "border-gray-300"
+                  } text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5`}
                 />
+                {errors.userName && (
+                  <p className="text-red-600">!{errors.userName}</p>
+                )}
               </div>
               <div>
                 <label
@@ -168,10 +184,16 @@ function page() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  className={`bg-gray-700 placeholder:text-gray-900 border ${
+                    errors.email
+                      ? " border-red-700 border-4"
+                      : "border-gray-300"
+                  } text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5`}
                   placeholder="name@company.com"
-                  required
                 />
+                {errors.email && (
+                  <p className="text-red-600">!{errors.email}</p>
+                )}
               </div>
               <div>
                 <label
@@ -182,9 +204,8 @@ function page() {
                 </label>
                 <select
                   id="gender"
-                  className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  className={`bg-gray-700 placeholder:text-gray-900 border $ text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5`}
                   placeholder="what is your gender"
-                  required
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
                 >
@@ -206,9 +227,11 @@ function page() {
                   value={pass}
                   onChange={(e) => setPass(e.target.value)}
                   placeholder="xxx"
-                  className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  required
+                  className={`bg-gray-700 placeholder:text-gray-900 border ${
+                    errors.pass ? " border-red-700 border-4" : "border-gray-300"
+                  } text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5`}
                 />
+                {errors.pass && <p className="text-red-600">!{errors.pass}</p>}
               </div>
               <div>
                 <label
@@ -224,9 +247,15 @@ function page() {
                   value={compass}
                   onChange={(e) => setCompass(e.target.value)}
                   placeholder="xxx"
-                  className="bg-gray-700 placeholder:text-gray-900 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  required
+                  className={`bg-gray-700 placeholder:text-gray-900 border ${
+                    errors.compass
+                      ? " border-red-700 border-4"
+                      : "border-gray-300"
+                  } text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5`}
                 />
+                {errors.compass && (
+                  <p className="text-red-600">!{errors.compass}</p>
+                )}
               </div>
 
               <div>
@@ -241,10 +270,11 @@ function page() {
                   id="dob"
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
-                  className="bg-gray-700 border border-gray-300 text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  required
+                  className={`bg-gray-700 placeholder:text-gray-900 border ${
+                    errors.dob ? " border-red-700 border-4" : "border-gray-300"
+                  } text-gray-300 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5`}
                 />
-                {dob}
+                {errors.dob && <p className="text-red-600">!{errors.dob}</p>}
               </div>
 
               <div className="flex items-start">
@@ -255,7 +285,6 @@ function page() {
                     type="checkbox"
                     onChange={() => setAcceptterms(!acceptterms)}
                     className="w-4 h-4 border border-gray-300 rounded bg-gray-700 placeholder:text-gray-300 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    required
                   />
                 </div>
 
