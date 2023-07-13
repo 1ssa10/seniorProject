@@ -2,11 +2,9 @@
 import Filmposter from "@/components/Filmposter";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useState } from "react";
-// import Datepicker from "react-tailwindcss-datepicker";
-import DatePicker from "react-datepicker";
-// import { Datepicker } from "flowbite";
 
 function page() {
   const [f_name, setfName] = useState("");
@@ -19,6 +17,7 @@ function page() {
   const [dob, setDob] = useState("");
   const [acceptterms, setAcceptterms] = useState(false);
   const [errors, setErrors] = useState({});
+  const router = useRouter();
 
   const createUser = async () => {
     const res = await fetch("http://localhost:3000/api/user", {
@@ -131,6 +130,7 @@ function page() {
       // Form is valid, submit the data
       // Your logic for form submission here
       createUser();
+      router.push("api/auth/signin");
       console.log("Form submitted");
     } else {
       // Form validation failed, update the errors state

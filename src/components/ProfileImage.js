@@ -8,7 +8,7 @@ function ProfileImage({ src, className }) {
     >
       {src == null ? (
         <Image
-          src="/images/defaultproimage-removebg-preview.png"
+          src="/images/redpropic.png"
           alt="Profile Image"
           quality={100}
           fill
