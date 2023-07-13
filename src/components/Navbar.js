@@ -3,10 +3,12 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import ProfileImage from "./ProfileImage";
+import { useRouter } from "next/router";
 
 function Navbar() {
   const session = useSession();
   const user = session.data?.user;
+
   return (
     <nav className="bg-black sticky z-20 w-full  top-0 left-0 border-b border-red-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -65,7 +67,7 @@ function Navbar() {
             <li>
               <Link
                 href="/"
-                className="block py-2 pl-3 pr-4 text-white rounded md:bg-transparent md:hover:text-red-700 md:p-0"
+                className="block py-2 pl-3 pr-4 text-white rounded md:bg-transparent md:hover:text-red-700 md:p-0 "
                 aria-current="page"
               >
                 Home
