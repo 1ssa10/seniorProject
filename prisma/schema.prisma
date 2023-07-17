@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -55,8 +56,8 @@ model Film {
   Categories      Category[]
   directedby      Director   @relation(fields: [directorId], references: [id])
   directorId      String
-  ACT_Rate        AVG_Rate?  @relation(fields: [AVG_RateId], references: [id])
-  AVG_RateId      String?
+  AVG_Rating      AvgRating? @relation(fields: [avgRatingid], references: [id])
+  avgRatingid     String?
   Rating          Rating[]
   trailer         String?
 }
@@ -110,12 +111,10 @@ model Comment {
   Rating         Rating[]
 }
 
-model AVG_Rate {
-  id        String @id @default(uuid())
-  rate_avg  Float
-  sum_stars Float
-  nb_rating Int
-  Film      Film[]
+view AvgRating {
+  id      String @id @default(uuid())
+  average Float
+  Film    Film[]
 }
 
 enum Gender {
