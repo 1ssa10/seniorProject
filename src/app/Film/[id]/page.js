@@ -3,12 +3,11 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Loading from "./loading";
 import { useEffect, useState } from "react";
-import SignINComponent from "@/components/SignINComponent";
-import Ratingstars from "@/components/Ratingstars";
 import { Rating, Typography } from "@material-tailwind/react";
-import { every } from "lodash";
 import ProfileImage from "@/components/ProfileImage";
+
 import { DateTime } from "luxon";
+import Averagerate from "@/components/Averagerate";
 function Page({ params }) {
   // const url = window.location.href;
   // const id = url.split("/Film/")[1];
@@ -19,7 +18,7 @@ function Page({ params }) {
   const [rated, setRated] = useState(0);
   const [inputVAlue, setInputValue] = useState("");
   const [comments, setComments] = useState([]);
-
+  const [avg, setAVG] = useState();
   useEffect(() => {
     async function fetchFilmDetails() {
       const res = await fetch("http://localhost:3000/api/FilmContant", {
@@ -52,6 +51,24 @@ function Page({ params }) {
     fetchFilmDetails();
     fetchComments();
   }, [id]);
+
+  useEffect(() => {
+    async function avgRate() {
+      const res = await fetch("http://localhost:3000/api/AVGrating", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      setAVG(data.average);
+    }
+    avgRate();
+  }, [comments]);
 
   const Commenting = async (user_id, film_id, nb_stars, comment_d) => {
     // try {
@@ -92,6 +109,23 @@ function Page({ params }) {
 
   return (
     <form onSubmit={(event) => event.preventDefault()}>
+      <div className=" font-bold text-red-700 text-lg">{avg?.toFixed(1)}</div>
+      <input
+        type="range"
+        min={0}
+        max="5"
+        value={`${avg?.toFixed(1)}`}
+        className="range w-full flex justify-between text-xs px-2"
+        step="1"
+      />
+      <div className="w-full flex justify-between text-xs px-2">
+        <span>|</span>
+        <span>|</span>
+        <span>|</span>
+        <span>|</span>
+        <span>|</span>
+      </div>
+
       {film?.trailer && (
         <iframe
           width="560"
