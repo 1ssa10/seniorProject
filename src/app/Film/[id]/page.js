@@ -5,9 +5,10 @@ import Loading from "./loading";
 import { useEffect, useState } from "react";
 import { Rating, Typography } from "@material-tailwind/react";
 import ProfileImage from "@/components/ProfileImage";
-
+import ReactSpeedometer from "react-d3-speedometer";
 import { DateTime } from "luxon";
 import Averagerate from "@/components/Averagerate";
+
 function Page({ params }) {
   // const url = window.location.href;
   // const id = url.split("/Film/")[1];
@@ -65,7 +66,7 @@ function Page({ params }) {
       });
       const data = await res.json();
       console.log(data);
-      setAVG(data.average);
+      setAVG(parseFloat(data.average.toFixed(1)));
     }
     avgRate();
   }, [comments]);
@@ -109,23 +110,20 @@ function Page({ params }) {
 
   return (
     <form onSubmit={(event) => event.preventDefault()}>
-      <div className=" font-bold text-red-700 text-lg">{avg?.toFixed(1)}</div>
-      <input
-        type="range"
-        min={0}
-        max="5"
-        value={`${avg?.toFixed(1)}`}
-        className="range w-full flex justify-between text-xs px-2"
-        step="1"
-      />
-      <div className="w-full flex justify-between text-xs px-2">
-        <span>|</span>
-        <span>|</span>
-        <span>|</span>
-        <span>|</span>
-        <span>|</span>
+      <div className=" font-bold text-red-700 text-lg">{avg}</div>
+      <div className=" w-fit rounded h-fit items-center">
+        <ReactSpeedometer
+          value={avg}
+          minValue={0}
+          maxValue={5}
+          needleColor="#171f2a"
+          startColor="red"
+          endColor="green"
+          width={400}
+          needleTransition="easeBounceInOut"
+          needleTransitionDuration={2000}
+        />
       </div>
-
       {film?.trailer && (
         <iframe
           width="560"
@@ -196,7 +194,7 @@ function Page({ params }) {
         </div>
       ) : null}
       <div className=" flex justify-center">
-        <div className=" grid-cols-1 w-1/2">
+        <div className=" grid-cols-1 w-1/2 overflow-y-auto relative h-96 scrollbar scrollbar-track-black scrollbar-thumb-blue-gray-900 scrollbar-thumb-rounded ">
           {comments?.map((com) => (
             <div
               key={com?.commentId}
