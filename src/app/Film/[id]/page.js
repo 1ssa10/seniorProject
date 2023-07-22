@@ -3,11 +3,17 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Loading from "./loading";
 import { useEffect, useState } from "react";
-import { Rating, Typography } from "@material-tailwind/react";
+import { Carousel, Rating, Typography } from "@material-tailwind/react";
 import ProfileImage from "@/components/ProfileImage";
 import ReactSpeedometer from "react-d3-speedometer";
 import { DateTime } from "luxon";
 import Averagerate from "@/components/Averagerate";
+import {
+  ButtonBack,
+  ButtonNext,
+  CarouselProvider,
+  Slider,
+} from "pure-react-carousel";
 
 function Page({ params }) {
   // const url = window.location.href;
@@ -142,19 +148,86 @@ function Page({ params }) {
           <img src={film?.image} alt="film poster" width={280} height={420} />
         </div>
         <div className="flex flex-col justify-end">
-          {film?.Actors?.map((actor) => (
-            <div key={actor.id} className="flex items-center mb-4">
-              <Image
-                src={actor?.image}
-                alt="Actor Image"
-                width={100}
-                height={120}
-              />
-              <p className="ml-4">
-                {actor.first_name} {actor.last_name}
-              </p>
+          <CarouselProvider
+            className="lg:block hidden"
+            naturalSlideWidth={100}
+            isIntrinsicHeight={true}
+            totalSlides={12}
+            visibleSlides={4}
+            step={1}
+            infinite={true}
+          >
+            <div className="w-full relative flex items-center justify-center">
+              <ButtonBack
+                role="button"
+                aria-label="slide backward"
+                className="absolute z-30 left-0 ml-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 cursor-pointer"
+                id="prev"
+              >
+                <svg
+                  width={8}
+                  height={14}
+                  viewBox="0 0 8 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7 1L1 7L7 13"
+                    stroke="white"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </ButtonBack>
+              <div className="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+                <Slider>
+                  <div
+                    id="slider"
+                    className="h-full flex lg:gap-8 md:gap-6 gap-14 items-center justify-start transition ease-out duration-700"
+                  >
+                    {film?.Actors?.map((actor) => (
+                      <div key={actor.id} className="flex items-center mb-4">
+                        <div>
+                          <Image
+                            src={actor?.image}
+                            alt="Actor Image"
+                            width={100}
+                            height={120}
+                          />
+                          <p className="ml-4">
+                            {actor.first_name} <br /> {actor.last_name}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Slider>
+              </div>
+              <ButtonNext
+                role="button"
+                aria-label="slide forward"
+                className="absolute z-30 right-0 mr-8 focus:outline-none focus:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
+                id="next"
+              >
+                <svg
+                  width={8}
+                  height={14}
+                  viewBox="0 0 8 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 1L7 7L1 13"
+                    stroke="white"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </ButtonNext>
             </div>
-          ))}
+          </CarouselProvider>
         </div>
       </div>
 
@@ -193,43 +266,61 @@ function Page({ params }) {
           {/* {console.log(session.data.user.id)} */}
         </div>
       ) : null}
-      <div className=" flex justify-center">
-        <div className=" grid-cols-1 w-1/2 overflow-y-auto relative h-96 scrollbar scrollbar-track-black scrollbar-thumb-blue-gray-900 scrollbar-thumb-rounded ">
+      <div className=" flex justify-center relative">
+        <div className=" grid-cols-1 md:w-1/2 overflow-y-auto  h-96 scrollbar scrollbar-track-black scrollbar-thumb-blue-gray-900 scrollbar-thumb-rounded ">
           {comments?.map((com) => (
             <div
               key={com?.commentId}
-              className=" border-4 border-blue-gray-900 rounded-3xl p-3 m-2"
+              className=" text-black p-4 flex max-w-3xl"
             >
-              {parseInt(now - new Date(com.date)) >= 0 &&
-                parseInt(now - new Date(com.date)) < 60000 && (
-                  <span>{parseInt((now - new Date(com.date)) / 1000)} s</span>
-                )}
-              {parseInt((now - new Date(com.date)) / 1000) >= 60 &&
-                parseInt((now - new Date(com.date)) / 1000) < 3600 && (
-                  <span>{parseInt((now - new Date(com.date)) / 60000)} m</span>
-                )}
-              {parseInt((now - new Date(com.date)) / 60000) >= 60 &&
-                parseInt((now - new Date(com.date)) / 3600000) < 24 && (
-                  <span>
-                    {parseInt((now - new Date(com.date)) / 3600000)} h
-                  </span>
-                )}
-              {parseInt((now - new Date(com.date)) / 3600000) >= 24 && (
-                <span>{parseInt((now - new Date(com.date)) / 86400000)} d</span>
-              )}
-              {/* {console.log(parseInt((now - new Date(com.date)) / 3600000))} */}
-
-              <Rating
-                unratedColor="red"
-                ratedColor="red"
-                value={com.nb_stars}
-                readonly
-                className=" flex justify-end"
-              />
-              <div className="flex">
-                <ProfileImage src={com.rater?.image} /> {com.rater.name}{" "}
+              <div>
+                <ProfileImage
+                  src={com.rater?.image}
+                  className="rounded-full h-8 w-8 mr-2 mt-1"
+                />
               </div>
-              <div className="break-all">{com.comment?.comment_detail}</div>
+              <div className=" w-full overflow-hidden">
+                <div className="bg-blue-gray-900 rounded-3xl px-4 pt-2 pb-2.5">
+                  <div className="font-semibold text-sm leading-relaxed">
+                    {com.rater.name}
+                  </div>
+                  <Rating
+                    unratedColor="red"
+                    ratedColor="red"
+                    value={com.nb_stars}
+                    readonly
+                    // className=" flex justify-end"
+                  />
+                  <div className="text-normal leading-snug md:leading-normal break-words">
+                    {com.comment?.comment_detail}
+                  </div>
+                </div>
+                <div className="text-sm ml-4 mt-0.5 text-gray-500 dark:text-gray-400">
+                  {parseInt(now - new Date(com.date)) >= 0 &&
+                    parseInt(now - new Date(com.date)) < 60000 && (
+                      <span>
+                        {parseInt((now - new Date(com.date)) / 1000)} s
+                      </span>
+                    )}
+                  {parseInt((now - new Date(com.date)) / 1000) >= 60 &&
+                    parseInt((now - new Date(com.date)) / 1000) < 3600 && (
+                      <span>
+                        {parseInt((now - new Date(com.date)) / 60000)} m
+                      </span>
+                    )}
+                  {parseInt((now - new Date(com.date)) / 60000) >= 60 &&
+                    parseInt((now - new Date(com.date)) / 3600000) < 24 && (
+                      <span>
+                        {parseInt((now - new Date(com.date)) / 3600000)} h
+                      </span>
+                    )}
+                  {parseInt((now - new Date(com.date)) / 3600000) >= 24 && (
+                    <span>
+                      {parseInt((now - new Date(com.date)) / 86400000)} d
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
           ))}
         </div>
