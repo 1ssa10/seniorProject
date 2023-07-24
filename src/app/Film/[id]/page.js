@@ -144,21 +144,21 @@ function Page({ params }) {
           <img src={film?.image} alt="film poster" width={280} height={420} />
         </div>
         <div className="flex flex-col justify-end">
-          <div className="w-fit h-fit mx-auto overflow-x-hidden overflow-y-hidden bg-blue-gray-900">
+          <div className="w-fit h-fit mx-auto overflow-x-hidden overflow-y-hidden bg-blue-gray-900 rounded-lg">
             <Swiper
               slidesPerView={4}
-              spaceBetween={10}
+              // spaceBetween={}
               pagination={{
                 clickable: true,
               }}
               navigation={true}
               modules={[Pagination, Navigation]}
-              className=" max-w-3xl"
+              className=" max-w-3xl "
             >
               {film?.Actors?.map((actor, index) => (
                 <div key={actor.id} className="flex items-center mb-4">
-                  <SwiperSlide>
-                    <div>
+                  <SwiperSlide key={actor.id}>
+                    <div className=" items-center">
                       <Image
                         src={actor?.image}
                         alt="Actor Image"
