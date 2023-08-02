@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Navigation } from "swiper/modules";
+import { Divider } from "@mui/material";
 
 function Page({ params }) {
   // const url = window.location.href;
@@ -143,37 +144,39 @@ function Page({ params }) {
 
           <img src={film?.image} alt="film poster" width={280} height={420} />
         </div>
-        <div className="flex flex-col justify-end">
-          <div className="w-fit h-fit mx-auto overflow-x-hidden overflow-y-hidden bg-blue-gray-900 rounded-lg">
-            <Swiper
-              slidesPerView={4}
-              // spaceBetween={}
-              pagination={{
-                clickable: true,
-              }}
-              navigation={true}
-              modules={[Pagination, Navigation]}
-              className=" max-w-3xl "
-            >
-              {film?.Actors?.map((actor, index) => (
-                <div key={actor.id} className="flex items-center mb-4">
-                  <SwiperSlide key={actor.id}>
-                    <div className=" items-center">
-                      <Image
-                        src={actor?.image}
-                        alt="Actor Image"
-                        width={100}
-                        height={120}
-                      />
-                      <p className="ml-4">
-                        {actor.first_name} <br /> {actor.last_name}
-                      </p>
-                    </div>
-                  </SwiperSlide>
-                </div>
-              ))}
-            </Swiper>
-          </div>
+        <div>{film?.description}</div>
+      </div>
+      <p className=" flex justify-center text-red-700">Actors :</p>
+      <div className="flex flex-col justify-end">
+        <div className="w-fit h-fit mx-auto overflow-x-hidden overflow-y-hidden bg-blue-gray-900 rounded-lg">
+          <Swiper
+            slidesPerView={5}
+            spaceBetween={0}
+            pagination={{
+              clickable: true,
+            }}
+            navigation={true}
+            modules={[Pagination, Navigation]}
+            className=" max-w-3xl "
+          >
+            {film?.Actors?.map((actor, index) => (
+              <div key={actor.id} className="flex items-center mb-4">
+                <SwiperSlide key={actor.id}>
+                  <div className=" items-center mt-2">
+                    <Image
+                      src={actor?.image}
+                      alt="Actor Image"
+                      width={100}
+                      height={120}
+                    />
+                    <p className="ml-4">
+                      {actor.first_name} <br /> {actor.last_name}
+                    </p>
+                  </div>
+                </SwiperSlide>
+              </div>
+            ))}
+          </Swiper>
         </div>
       </div>
 
@@ -213,7 +216,7 @@ function Page({ params }) {
         </div>
       ) : null}
       <div className=" flex justify-center relative">
-        <div className=" grid-cols-1 md:w-1/2 overflow-y-auto  h-96 scrollbar scrollbar-track-black scrollbar-thumb-blue-gray-900 scrollbar-thumb-rounded ">
+        <div className=" grid-cols-1 sm:w-1/2 w-full   overflow-y-auto  h-96 scrollbar scrollbar-track-black scrollbar-thumb-blue-gray-900 scrollbar-thumb-rounded ">
           {comments?.map((com) => (
             <div
               key={com?.commentId}
