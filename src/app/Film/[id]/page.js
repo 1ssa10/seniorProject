@@ -110,45 +110,86 @@ function Page({ params }) {
   let timedef;
 
   if (session.status !== "authenticated") return;
-
+  console.log(film);
   return (
     <form onSubmit={(event) => event.preventDefault()}>
-      <div className=" font-bold text-red-700 text-lg">{avg}</div>
-      <div className=" w-fit rounded h-fit items-center">
-        <ReactSpeedometer
-          value={avg}
-          minValue={0}
-          maxValue={5}
-          needleColor="#171f2a"
-          startColor="red"
-          endColor="green"
-          width={400}
-          needleTransition="easeBounceInOut"
-          needleTransitionDuration={2000}
-        />
+      <div className="  grid grid-cols-3">
+        <div className="  flex items-center justify-center  w-full font-bold text-red-700 text-7xl col-span-2">
+          <p>{film?.title}</p>
+        </div>
+        <div className="flex justify-end">
+          <ReactSpeedometer
+            value={avg}
+            minValue={0}
+            maxValue={5}
+            needleColor="gray"
+            startColor="#4a5568"
+            endColor="#B91C1C"
+            width={400}
+            needleTransition="easeBounceInOut"
+            needleTransitionDuration={2000}
+            valueTextFontSize={100}
+            segmentColors={[
+              "#2d3748",
+              "#718096",
+              "#F87171",
+              "#c53030",
+              "#b91c1c",
+            ]}
+            customSegmentLabels={[
+              {
+                text: "BAD",
+                position: "INSIDE",
+                color: "black",
+              },
+              {
+                text: "OKAY",
+                position: "INSIDE",
+                color: "black",
+              },
+              {
+                text: "AVERAGE",
+                position: "INSIDE",
+                color: "black",
+              },
+              {
+                text: "GOOD",
+                position: "INSIDE",
+                color: "black",
+              },
+              {
+                text: "AMAZING",
+                position: "INSIDE",
+                color: "black",
+              },
+            ]}
+          />
+        </div>
       </div>
-      {film?.trailer && (
-        <iframe
-          width="560"
-          height="315"
-          src={film.trailer}
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen="allowfullscreen"
-        ></iframe>
-      )}
       <div className="flex">
         <div className="mr-4">
           <p>{film?.title}</p>
 
           <img src={film?.image} alt="film poster" width={280} height={420} />
         </div>
-        <div>{film?.description}</div>
+        <div className=" bg-gray-900 h-fit rounded-lg">{film?.description}</div>
       </div>
+      {film?.trailer && (
+        <div className=" flex justify-center">
+          <iframe
+            width="660"
+            height="415"
+            src={`${film.trailer}?rel=0`}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen="allowfullscreen"
+          />
+        </div>
+      )}
       <p className=" flex justify-center text-red-700">Actors :</p>
       <div className="flex flex-col justify-end">
-        <div className="w-fit h-fit mx-auto overflow-x-hidden overflow-y-hidden bg-blue-gray-900 rounded-lg">
+        <div className="w-fit h-fit mx-auto overflow-x-hidden overflow-y-hidden bg-gray-900 rounded-lg">
           <Swiper
             slidesPerView={5}
             spaceBetween={0}
@@ -216,7 +257,7 @@ function Page({ params }) {
         </div>
       ) : null}
       <div className=" flex justify-center relative">
-        <div className=" grid-cols-1 sm:w-1/2 w-full   overflow-y-auto  h-96 scrollbar scrollbar-track-black scrollbar-thumb-blue-gray-900 scrollbar-thumb-rounded ">
+        <div className=" grid-cols-1 sm:w-1/2 w-full bg-gray-900 overflow-y-auto  h-96 scrollbar scrollbar-track-gray-900 scrollbar-thumb-red-700 scrollbar-thumb-rounded rounded-xl ">
           {comments?.map((com) => (
             <div
               key={com?.commentId}
@@ -229,7 +270,7 @@ function Page({ params }) {
                 />
               </div>
               <div className=" w-full overflow-hidden">
-                <div className="bg-blue-gray-900 rounded-3xl px-4 pt-2 pb-2.5">
+                <div className="bg-gray-800  border border-white  rounded-3xl px-4 pt-2 pb-2.5">
                   <div className="font-semibold text-sm leading-relaxed">
                     {com.rater.name}
                   </div>
