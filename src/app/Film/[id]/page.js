@@ -22,6 +22,7 @@ function Page({ params }) {
   const [rated, setRated] = useState(0);
   const [inputVAlue, setInputValue] = useState("");
   const [comments, setComments] = useState([]);
+  const [director, setDirector] = useState({});
   const [avg, setAVG] = useState();
   useEffect(() => {
     async function fetchFilmDetails() {
@@ -51,9 +52,23 @@ function Page({ params }) {
       const data = await res.json();
       setComments(data);
     }
+    async function fetchDirector() {
+      const res = await fetch("http://localhost:3000/api/director", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: film.directorId,
+        }),
+      });
+      const data = await res.json();
+      setDirector(data);
+    }
 
     fetchFilmDetails();
     fetchComments();
+    fetchDirector();
   }, [id]);
 
   useEffect(() => {
@@ -68,7 +83,7 @@ function Page({ params }) {
         }),
       });
       const data = await res.json();
-      console.log(data);
+
       setAVG(parseFloat(data.average.toFixed(1)));
     }
     avgRate();
@@ -113,7 +128,7 @@ function Page({ params }) {
   console.log(film);
   return (
     <form onSubmit={(event) => event.preventDefault()}>
-      <div className="  grid grid-cols-3">
+      <div className="  sm:grid grid-cols-3">
         <div className="  flex items-center justify-center  w-full font-bold text-red-700 text-7xl col-span-2">
           <p>{film?.title}</p>
         </div>
@@ -128,7 +143,7 @@ function Page({ params }) {
             width={400}
             needleTransition="easeBounceInOut"
             needleTransitionDuration={2000}
-            valueTextFontSize={100}
+            valueTextFontSize={"100"}
             segmentColors={[
               "#2d3748",
               "#718096",
@@ -166,13 +181,39 @@ function Page({ params }) {
           />
         </div>
       </div>
-      <div className="flex">
-        <div className="mr-4">
-          <p>{film?.title}</p>
-
+      <div className=" sm:grid grid-cols-3 ">
+        <div className="mr-4 flex justify-center items-center">
           <img src={film?.image} alt="film poster" width={280} height={420} />
         </div>
-        <div className=" bg-gray-900 h-fit rounded-lg">{film?.description}</div>
+
+        <div className=" h-96 overflow-y-auto scrollbar scrollbar-track-gray-900 scrollbar-thumb-red-700 scrollbar-thumb-rounded pr-5">
+          {film?.description}"Lorem ipsum dolor sit amet, consectetur adipiscing
+          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+          aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+          in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum." "Lorem ipsum
+          dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+          occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+          mollit anim id est laborum.""Lorem ipsum dolor sit amet, consectetur
+          adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+          irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+          fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+          sunt in culpa qui officia deserunt mollit anim id est laborum."
+        </div>
+        <div className="  flex flex-col justify-center items-center">
+          <div>
+            <Image src={director?.image} width={180} height={360} />
+          </div>
+          <p>{director?.first_name}</p>
+        </div>
       </div>
       {film?.trailer && (
         <div className=" flex justify-center">
@@ -221,11 +262,12 @@ function Page({ params }) {
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex justify-center  items-center gap-2">
         <Rating
           unratedColor="red"
           ratedColor="red"
           value={rated}
+          size="large"
           onChange={(value) => setRated(value)}
         />
         <Typography color="blue-gray" className="font-medium text-red-700">
