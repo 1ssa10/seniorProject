@@ -140,8 +140,6 @@ function Page({ params }) {
     fetchComments();
   };
   let now = new Date();
-  let stared;
-  stared = alreadyRated.nb_stars;
 
   if (session.status !== "authenticated") redirect("/");
   console.log(film);
@@ -269,7 +267,7 @@ function Page({ params }) {
       {alreadyRated ? (
         <div className="flex flex-col justify-center  items-center gap-2">
           <div>your comment:</div>
-          {console.log(stared)}
+
           {console.log(alreadyRated.nb_stars)}
           <div className=" w-1/2 overflow-hidden">
             <div className="bg-gray-800  border border-white  rounded-3xl px-4 pt-2 pb-2.5">
@@ -309,7 +307,7 @@ function Page({ params }) {
       )}
       <br />
       <br />
-      {rated !== 0 ? (
+      {rated !== 0 && !alreadyRated ? (
         <div className=" grid place-items-center">
           <div className="py-2 px-4 mb-4   bg-white rounded-lg rounded-t-lg border border-gray-200">
             <textarea
@@ -331,7 +329,9 @@ function Page({ params }) {
           </button>
           {/* {console.log(session.data.user.id)} */}
         </div>
-      ) : null}
+      ) : (
+        <div></div>
+      )}
       <div className=" flex justify-center relative">
         <div className=" grid-cols-1 sm:w-1/2 w-full bg-gray-900 overflow-y-auto  h-96 scrollbar scrollbar-track-gray-900 scrollbar-thumb-red-700 scrollbar-thumb-rounded rounded-xl ">
           {comments?.map((com) => (
