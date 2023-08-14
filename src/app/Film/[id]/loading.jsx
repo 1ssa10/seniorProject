@@ -6,26 +6,26 @@ export default function Loading() {
     <div>
       <div className="  sm:grid grid-cols-3">
         <br />
-        <div className="  flex items-center justify-center  w-full font-bold text-red-700 text-7xl col-span-2">
+        <div className="  flex  justify-center  w-full font-bold text-red-700 text-7xl col-span-2">
           <Skeleton
             variant="rectangular"
             sx={{ bgcolor: "grey.900" }}
             animation="wave"
             width={250}
             height={20}
-            className=" rounded-lg"
+            className=" rounded-lg  mt-5"
           />
         </div>
         <div className="flex justify-end">
           {" "}
-          <Skeleton
+          {/* <Skeleton
             variant="rectangular"
             sx={{ bgcolor: "grey.900" }}
             animation="wave"
             width={100}
             height={100}
             className=" rounded-lg"
-          />
+          /> */}
         </div>
       </div>
       <br />

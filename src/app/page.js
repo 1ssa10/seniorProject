@@ -5,7 +5,7 @@ import ProfileImage from "../components/ProfileImage";
 import { useSession } from "next-auth/react";
 import SignINComponent from "@/components/SignINComponent";
 import SearchBar from "@/components/SearchBar";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function Home() {
   const session = useSession();

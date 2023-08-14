@@ -11,6 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Navigation } from "swiper/modules";
 import { Divider } from "@mui/material";
+import { redirect } from "next/navigation";
 
 function Page({ params }) {
   // const url = window.location.href;
@@ -23,6 +24,7 @@ function Page({ params }) {
   const [inputVAlue, setInputValue] = useState("");
   const [comments, setComments] = useState([]);
   const [director, setDirector] = useState({});
+  const [alreadyRated, setAlreadyRated] = useState({});
   const [avg, setAVG] = useState();
   useEffect(() => {
     async function fetchFilmDetails() {
@@ -86,7 +88,23 @@ function Page({ params }) {
 
       setAVG(parseFloat(data.average.toFixed(1)));
     }
+    async function checkRated() {
+      const res = await fetch("http://localhost:3000/api/CheckRated", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+          user_id: session.data?.user.id,
+        }),
+      });
+      const data = await res.json();
+
+      setAlreadyRated(data);
+    }
     avgRate();
+    checkRated();
   }, [comments]);
 
   const Commenting = async (user_id, film_id, nb_stars, comment_d) => {
@@ -122,9 +140,10 @@ function Page({ params }) {
     fetchComments();
   };
   let now = new Date();
-  let timedef;
+  let stared;
+  stared = alreadyRated.nb_stars;
 
-  if (session.status !== "authenticated") return;
+  if (session.status !== "authenticated") redirect("/");
   console.log(film);
   return (
     <form onSubmit={(event) => event.preventDefault()}>
@@ -209,6 +228,8 @@ function Page({ params }) {
           />
         </div>
       )}
+      <br />
+      <br />
       <p className=" flex justify-center text-red-700">Actors :</p>
       <div className="flex flex-col justify-end">
         <div className="w-fit h-fit mx-auto overflow-x-hidden overflow-y-hidden bg-gray-900 rounded-lg">
@@ -242,20 +263,52 @@ function Page({ params }) {
           </Swiper>
         </div>
       </div>
+      <br />
+      <br />
 
-      <div className="flex justify-center  items-center gap-2">
-        <Rating
-          unratedColor="red"
-          ratedColor="red"
-          value={rated}
-          size="large"
-          onChange={(value) => setRated(value)}
-        />
-        <Typography color="blue-gray" className="font-medium text-red-700">
-          {rated}.0 Rated
-        </Typography>
-      </div>
-
+      {alreadyRated ? (
+        <div className="flex flex-col justify-center  items-center gap-2">
+          <div>your comment:</div>
+          {console.log(stared)}
+          {console.log(alreadyRated.nb_stars)}
+          <div className=" w-1/2 overflow-hidden">
+            <div className="bg-gray-800  border border-white  rounded-3xl px-4 pt-2 pb-2.5">
+              <Rating
+                unratedColor="red"
+                ratedColor="red"
+                value={alreadyRated?.nb_stars}
+                size="large"
+                readonly
+              />
+              <Typography
+                color="blue-gray"
+                className="font-medium text-red-700"
+              >
+                {alreadyRated?.nb_stars}.0 Rated
+              </Typography>
+              <div className="text-normal leading-snug md:leading-normal break-words break-all">
+                {alreadyRated.comment?.comment_detail}
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="flex justify-center  items-center gap-2">
+          {" "}
+          <Rating
+            unratedColor="red"
+            ratedColor="red"
+            value={rated}
+            size="large"
+            onChange={(value) => setRated(value)}
+          />
+          <Typography color="blue-gray" className="font-medium text-red-700">
+            {rated}.0 Rate
+          </Typography>
+        </div>
+      )}
+      <br />
+      <br />
       {rated !== 0 ? (
         <div className=" grid place-items-center">
           <div className="py-2 px-4 mb-4   bg-white rounded-lg rounded-t-lg border border-gray-200">

@@ -1,14 +1,19 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import ProfileImage from "./ProfileImage";
 import { useRouter } from "next/router";
+import { redirect } from "next/navigation";
 
 function Navbar() {
   const session = useSession();
   const user = session.data?.user;
 
+  const signOutHandler = () => {
+    redirect("/");
+    signOut();
+  };
   return (
     <nav className="bg-black sticky z-20 w-full  top-0 left-0 border-b border-red-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -23,15 +28,25 @@ function Navbar() {
           </span>
         </div>
         <div className="flex md:order-2">
-          {user == null ? null : (
+          {user == null ? (
+            <button
+              type="button"
+              className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+              onClick={() => signIn()}
+            >
+              Sign In
+            </button>
+          ) : (
             <>
-              <button
-                type="button"
-                className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
-                onClick={() => signOut()}
-              >
-                Sign Out
-              </button>
+              <Link href="/">
+                <button
+                  type="button"
+                  className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+                  onClick={() => signOut()}
+                >
+                  Sign Out
+                </button>
+              </Link>
 
               <ProfileImage src={session.data?.user.image} className=" mx-5" />
             </>
