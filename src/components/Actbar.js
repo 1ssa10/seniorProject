@@ -3,30 +3,33 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-function SearchBar() {
+function Actbar() {
   const [searchitem, setSearchitem] = useState("");
-  const [films, setFilms] = useState([]);
+  const [actors, setActors] = useState([]);
   // const searchHandler = (e) => {
   //   setSearchitem((prev) => e.target.value);
   // };
   useEffect(() => {
-    async function fetchSerachedFilm() {
-      const res = await fetch("http://localhost:3000/api/searchedfilm", {
+    async function fetchSerachedActor() {
+      const res = await fetch("http://localhost:3000/api/searchedactor", {
         method: "POST",
         headers: {
           "content-Type": "application/json",
         },
         body: JSON.stringify({
-          film: searchitem,
+          actor: searchitem,
         }),
       });
+      if (!res.ok) {
+        console.error();
+      }
       const data = await res.json();
-      setFilms(data);
+      setActors(data);
     }
-
-    fetchSerachedFilm();
+    console.log(searchitem);
+    fetchSerachedActor();
   }, [searchitem]);
-  // console.log(films);
+  console.log(actors);
   return (
     <div className=" relative   mt-4  items-center justify-center  mx-auto ">
       <div className="flex items-center justify-center  ">
@@ -66,24 +69,28 @@ function SearchBar() {
         {searchitem !== "" && (
           <div className=" inset-0 flex justify-center items-center">
             <div className="p-4 rounded-lg relative  bg-gray-900 bg-opacity-50 backdrop-blur-md ">
-              {films.length > 0 ? (
+              {actors.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 transition-opacity duration-500  rlative">
-                  {films?.map((film) => (
+                  {actors?.map((actor) => (
                     <div
-                      key={film.id}
+                      key={actor.id}
                       className="opacity-50 transform hover:opacity-100 hover:scale-105 transition-opacity duration-300 relative z-10"
                     >
-                      <Link href={`/Film/${film.id}`}>
+                      <Link href={`/Actors/${actor.id}`}>
                         <Image
-                          src={film.image}
+                          src={actor.image}
                           width={80}
                           height={150}
-                          alt="searched film"
+                          alt="searched actor"
                           // onClick={() =>
-                          //   (window.location.href = `/Film/${film.id}`)
+                          //   (window.location.href = `/Film/${actor.id}`)
                           // }
                         />
-                        <span>{film.title}</span>
+                        <span>
+                          {actor.first_name}
+                          <br />
+                          {actor.last_name}
+                        </span>
                       </Link>
                     </div>
                   ))}
@@ -117,4 +124,4 @@ function SearchBar() {
   );
 }
 
-export default SearchBar;
+export default Actbar;

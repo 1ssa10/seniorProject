@@ -26,6 +26,8 @@ function Page({ params }) {
   const [director, setDirector] = useState({});
   const [alreadyRated, setAlreadyRated] = useState({});
   const [avg, setAVG] = useState();
+  const [comerror, setComerror] = useState();
+
   useEffect(() => {
     async function fetchFilmDetails() {
       const res = await fetch("http://localhost:3000/api/FilmContant", {
@@ -108,19 +110,23 @@ function Page({ params }) {
   }, [comments]);
 
   const Commenting = async (user_id, film_id, nb_stars, comment_d) => {
-    // try {
-    const res = await fetch("http://localhost:3000/api/Rating", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userid: user_id,
-        filmid: film_id,
-        nbstars: nb_stars,
-        comment: comment_d,
-      }),
-    });
+    if (comment_d == "") {
+      setComerror("Acomment is required!!");
+    } else {
+      // try {
+      const res = await fetch("http://localhost:3000/api/Rating", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: user_id,
+          filmid: film_id,
+          nbstars: nb_stars,
+          comment: comment_d,
+        }),
+      });
+    }
     // } catch (error) {
     //   console.error("Error:", error);}
 
@@ -142,7 +148,7 @@ function Page({ params }) {
   let now = new Date();
 
   if (session.status !== "authenticated") redirect("/");
-  console.log(film);
+
   return (
     <form onSubmit={(event) => event.preventDefault()}>
       <div className="  sm:grid grid-cols-3">
@@ -317,6 +323,7 @@ function Page({ params }) {
               value={inputVAlue}
               onChange={(e) => setInputValue(e.target.value)}
             ></textarea>
+            <p className=" text-red-700">{comerror}</p>
           </div>
           <button
             type="submit"
