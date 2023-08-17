@@ -12,6 +12,7 @@ import "swiper/css/pagination";
 import { Pagination, Navigation } from "swiper/modules";
 import { Divider } from "@mui/material";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 function Page({ params }) {
   // const url = window.location.href;
@@ -251,15 +252,17 @@ function Page({ params }) {
               <div key={actor.id} className="flex items-center mb-4">
                 <SwiperSlide key={actor.id}>
                   <div className=" items-center mt-2">
-                    <Image
-                      src={actor?.image}
-                      alt="Actor Image"
-                      width={100}
-                      height={120}
-                    />
-                    <p className="ml-4">
-                      {actor.first_name} <br /> {actor.last_name}
-                    </p>
+                    <Link href={`/Actor/${actor.id}`}>
+                      <Image
+                        src={actor?.image}
+                        alt="Actor Image"
+                        width={100}
+                        height={120}
+                      />
+                      <p className="ml-4">
+                        {actor.first_name} <br /> {actor.last_name}
+                      </p>
+                    </Link>
                   </div>
                 </SwiperSlide>
               </div>

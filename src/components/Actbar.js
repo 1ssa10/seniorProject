@@ -76,7 +76,7 @@ function Actbar() {
                       key={actor.id}
                       className="opacity-50 transform hover:opacity-100 hover:scale-105 transition-opacity duration-300 relative z-10"
                     >
-                      <Link href={`/Actors/${actor.id}`}>
+                      <Link href={`/Actor/${actor.id}`}>
                         <Image
                           src={actor.image}
                           width={80}

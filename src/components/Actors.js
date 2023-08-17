@@ -30,7 +30,7 @@ function Actors() {
       <div className=" grid lg:grid-cols-7  md:grid-cols-5 sm:grid-cols-3">
         {Acts?.map((Actor) => (
           <div key={Actor.id} className="w-30">
-            <Link href={`/Actors/${Actor.id}`}>
+            <Link href={`/Actor/${Actor.id}`}>
               <div className="actor-item flex flex-col items-center mt-2">
                 <Image src={Actor.image} alt="actor" width={160} height={300} />
               </div>
