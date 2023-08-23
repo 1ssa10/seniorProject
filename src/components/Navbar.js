@@ -5,6 +5,7 @@ import React from "react";
 import ProfileImage from "./ProfileImage";
 import { useRouter } from "next/router";
 import { redirect } from "next/navigation";
+import Drawer from "./Drawer";
 
 function Navbar() {
   const session = useSession();
@@ -51,7 +52,7 @@ function Navbar() {
               <ProfileImage src={session.data?.user.image} className=" mx-5" />
             </>
           )}
-          <button
+          {/* <button
             data-collapse-toggle="navbar-sticky"
             type="button"
             className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
@@ -72,7 +73,8 @@ function Navbar() {
                 clipRule="evenodd"
               ></path>
             </svg>
-          </button>
+          </button> */}
+          {/* <Drawer /> */}
         </div>
         <div
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
@@ -98,7 +100,7 @@ function Navbar() {
             </li>
             <li>
               <Link
-                href="#"
+                href="/Actors"
                 className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-700 md:p-0"
               >
                 Services
