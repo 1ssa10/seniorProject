@@ -7,6 +7,7 @@ import SignINComponent from "@/components/SignINComponent";
 import SearchBar from "@/components/SearchBar";
 import { Suspense, useState } from "react";
 import Drawer from "@/components/Drawer";
+import Recommended from "@/components/Recommended";
 
 export default function Home() {
   const session = useSession();

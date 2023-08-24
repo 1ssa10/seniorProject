@@ -211,7 +211,7 @@ function Page({ params }) {
         </div>
 
         <div className=" h-96 overflow-y-auto scrollbar scrollbar-track-gray-900 scrollbar-thumb-red-700 scrollbar-thumb-rounded pr-5">
-          {film?.description}"
+          {film?.description}
         </div>
         <div className="  flex flex-col justify-center items-center">
           <div>
@@ -220,6 +220,7 @@ function Page({ params }) {
           <p>{director?.first_name}</p>
         </div>
       </div>
+      <br />
       {film?.trailer && (
         <div className=" flex justify-center">
           <iframe

@@ -43,7 +43,7 @@ function Drawer({ cats }) {
           </div>
           <ul className="space-y-2">
             {cats?.map((cat) => (
-              <li>
+              <li key={cat.catergory}>
                 {/* <Link
                   href={`#${cat.catergory}`}
                   className="block text-gray-600 hover:text-gray-800"
