@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import { Badge } from "@mui/material";
+import Drawer from "./Drawer";
+import SearchBar from "./SearchBar";
 
 function HandlePosterClick(id) {
   const url = `/Film/${id}`;
@@ -42,8 +44,10 @@ function Filmposter() {
 
   return (
     <>
+      <SearchBar cats={cats} />
+
       {cats.map((cat, index) => (
-        <div key={cat.id}>
+        <div id={cat.catergory} key={cat.id}>
           <h2 className="mb-2 px-4 text-lg font-bold text-center text-red-900">
             {cat.catergory}
           </h2>

@@ -81,7 +81,7 @@ function Navbar() {
           id="navbar-sticky"
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium   md:flex-row md:space-x-8 md:mt-0 md:border-0">
-            <li>
+            <li className=" ">
               <Link
                 href="/"
                 className="block py-2 pl-3 pr-4 text-white rounded md:bg-transparent md:hover:text-red-700 md:p-0 "

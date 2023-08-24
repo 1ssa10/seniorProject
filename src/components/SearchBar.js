@@ -2,8 +2,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import Drawer from "./Drawer";
 
-function SearchBar() {
+function SearchBar({ cats }) {
   const [searchitem, setSearchitem] = useState("");
   const [films, setFilms] = useState([]);
   // const searchHandler = (e) => {
@@ -29,7 +30,8 @@ function SearchBar() {
   // console.log(films);
   return (
     <div className=" relative   mt-4  items-center justify-center  mx-auto ">
-      <div className="flex items-center justify-center  ">
+      <Drawer cats={cats} />
+      <div className="flex items-center justify-center ">
         <form method="GET">
           <div className="relative text-gray-600 focus-within:text-gray-400">
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">

@@ -6,6 +6,7 @@ import Sidenav from "../components/SideNav";
 import Providers from "../components/Providers";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@material-tailwind/react";
+import Drawer from "@/components/Drawer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

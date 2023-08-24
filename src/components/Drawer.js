@@ -1,61 +1,81 @@
 "use client";
+import Link from "next/link";
 import React, { useState } from "react";
 
-function Drawer() {
+function Drawer({ cats }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-
+  console.log(cats);
   return (
-    <div className="flex h-screen">
+    <div className="relative">
       <button
-        className="fixed  m-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none"
+        className="  absolute left-0 top-0 text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm px-4 py-2 focus:outline-none"
         onClick={toggleDrawer}
       >
-        Open Drawer
+        ...
       </button>
 
-      <div
-        className={`fixed w-64 h-screen p-4 overflow-y-auto transition-transform ${
-          isDrawerOpen ? "" : "-translate-x-full hidden"
-        }bg-white border-r shadow-lg`}
-      >
-        <div className="flex justify-between items-center mb-4">
-          <h5 className="text-base font-semibold text-gray-500">Menu</h5>
-          <div
-            className={`text-base font-semibold ${
-              isDrawerOpen ? "text-gray-500" : " hidden"
-            } cursor-pointer`}
-            onClick={toggleDrawer}
-          >
-            x
+      {isDrawerOpen ? (
+        <div
+          className={`fixed w-64 h-screen p-4 overflow-y-auto transition-transform ${
+            isDrawerOpen ? "" : "-translate-x-full hidden"
+          }  shadow-lg z-20  bg-gray-900 bg-opacity-50 backdrop-blur-md   `}
+        >
+          <div className="flex justify-between items-center mb-4">
+            <h5
+              className={`text-base font-semibold text-gray-500 ${
+                isDrawerOpen ? "text-gray-500" : " hidden"
+              }`}
+            >
+              Menu
+            </h5>
+            <div
+              className={`text-base font-semibold ${
+                isDrawerOpen ? "text-gray-500" : " hidden"
+              } cursor-pointer`}
+              onClick={toggleDrawer}
+            >
+              x
+            </div>
           </div>
+          <ul className="space-y-2">
+            {cats?.map((cat) => (
+              <li>
+                {/* <Link
+                  href={`#${cat.catergory}`}
+                  className="block text-gray-600 hover:text-gray-800"
+                  onClick={toggleDrawer}
+                >
+                  {cat.catergory}
+                </Link> */}
+                <Link
+                  href={`#${cat.catergory}`}
+                  className="block text-gray-600 hover:text-gray-800"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const section = document.getElementById(cat.catergory);
+                    if (section) {
+                      const navbarHeight = 80;
+                      const targetPosition = section.offsetTop - navbarHeight;
+
+                      window.scrollTo({
+                        top: targetPosition,
+                        behavior: "smooth",
+                      });
+                    }
+                    toggleDrawer();
+                  }}
+                >
+                  {cat.catergory}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="space-y-2">
-          <li>
-            <a href="#" className="block text-gray-600 hover:text-gray-800">
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="#" className="block text-gray-600 hover:text-gray-800">
-              About
-            </a>
-          </li>
-          <li>
-            <a href="#" className="block text-gray-600 hover:text-gray-800">
-              Services
-            </a>
-          </li>
-          <li>
-            <a href="#" className="block text-gray-600 hover:text-gray-800">
-              Contact
-            </a>
-          </li>
-        </ul>
-      </div>
+      ) : null}
     </div>
   );
 }

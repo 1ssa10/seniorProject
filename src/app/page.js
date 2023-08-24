@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import SignINComponent from "@/components/SignINComponent";
 import SearchBar from "@/components/SearchBar";
 import { Suspense, useState } from "react";
+import Drawer from "@/components/Drawer";
 
 export default function Home() {
   const session = useSession();
@@ -17,7 +18,6 @@ export default function Home() {
 
   return (
     <>
-      <SearchBar />
       <SignINComponent />
       <Filmposter />
     </>

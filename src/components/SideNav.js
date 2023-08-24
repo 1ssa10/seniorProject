@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import ProfileImage from "./ProfileImage";
+import Drawer from "./Drawer";
 
 function SideNav() {
   const session = useSession();
@@ -28,6 +29,7 @@ function SideNav() {
           </li>
         )}
       </ul>
+      <Drawer />
     </nav>
   );
 }
