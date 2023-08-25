@@ -12,7 +12,7 @@ function Drawer({ cats }) {
   return (
     <div className="relative">
       <button
-        className="  absolute left-0 top-0 text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm px-4 py-2 focus:outline-none"
+        className="  absolute left-0 top-0 text-white bg-gray-900 hover:bg-gray-800  font-medium rounded-lg text-sm px-4 py-2 focus:outline-none"
         onClick={toggleDrawer}
       >
         ...
@@ -27,14 +27,14 @@ function Drawer({ cats }) {
           <div className="flex justify-between items-center mb-4">
             <h5
               className={`text-base font-semibold text-gray-500 ${
-                isDrawerOpen ? "text-gray-500" : " hidden"
+                isDrawerOpen ? "text-red-500" : " hidden"
               }`}
             >
               Menu
             </h5>
             <div
               className={`text-base font-semibold ${
-                isDrawerOpen ? "text-gray-500" : " hidden"
+                isDrawerOpen ? "text-red-500" : " hidden"
               } cursor-pointer`}
               onClick={toggleDrawer}
             >
@@ -53,7 +53,7 @@ function Drawer({ cats }) {
                 </Link> */}
                 <Link
                   href={`#${cat.catergory}`}
-                  className="block text-gray-600 hover:text-gray-800"
+                  className="block text-gray-500 hover:text-red-500"
                   onClick={(e) => {
                     e.preventDefault();
                     const section = document.getElementById(cat.catergory);
