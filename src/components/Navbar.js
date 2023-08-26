@@ -6,6 +6,10 @@ import ProfileImage from "./ProfileImage";
 import { useRouter } from "next/router";
 import { redirect } from "next/navigation";
 import Drawer from "./Drawer";
+import HomeIcon from "@mui/icons-material/Home";
+import GroupsIcon from "@mui/icons-material/Groups";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 function Navbar() {
   const session = useSession();
@@ -30,13 +34,16 @@ function Navbar() {
         </div>
         <div className="flex md:order-2">
           {user == null ? (
-            <button
-              type="button"
-              className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
-              onClick={() => signIn()}
-            >
-              Sign In
-            </button>
+            <>
+              <button
+                type="button"
+                className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
+                onClick={() => signIn()}
+              >
+                Sign In
+              </button>
+              <ProfileImage className=" mx-5" />
+            </>
           ) : (
             <>
               <Link href="/">
@@ -52,32 +59,9 @@ function Navbar() {
               <ProfileImage src={session.data?.user.image} className=" mx-5" />
             </>
           )}
-          {/* <button
-            data-collapse-toggle="navbar-sticky"
-            type="button"
-            className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-            aria-controls="navbar-sticky"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-6 h-6"
-              aria-hidden="true"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          </button> */}
-          {/* <Drawer /> */}
         </div>
         <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+          className="items-center justify-center hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-sticky"
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium   md:flex-row md:space-x-8 md:mt-0 md:border-0">
@@ -87,15 +71,7 @@ function Navbar() {
                 className="block py-2 pl-3 pr-4 text-white rounded md:bg-transparent md:hover:text-red-700 md:p-0 "
                 aria-current="page"
               >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/Register"
-                className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-700 md:p-0"
-              >
-                About
+                <HomeIcon />
               </Link>
             </li>
             <li>
@@ -103,7 +79,15 @@ function Navbar() {
                 href="/Actors"
                 className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-700 md:p-0"
               >
-                Services
+                <GroupsIcon />
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/Profiles"
+                className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-700 md:p-0"
+              >
+                <AccountCircleIcon />
               </Link>
             </li>
             <li>
@@ -111,7 +95,7 @@ function Navbar() {
                 href="#"
                 className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-700 md:p-0"
               >
-                Contact
+                <SettingsIcon />
               </Link>
             </li>
           </ul>

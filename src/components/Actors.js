@@ -27,7 +27,7 @@ function Actors() {
 
   return (
     <>
-      <div className=" grid lg:grid-cols-7  md:grid-cols-5 sm:grid-cols-3">
+      <div className=" grid lg:grid-cols-8  md:grid-cols-5 sm:grid-cols-3">
         {Acts?.map((Actor) => (
           <div key={Actor.id} className="w-30">
             <Link href={`/Actor/${Actor.id}`}>
