@@ -151,3 +151,7 @@ body {
   right: 10px;
   background-color: blue;
 }
+
+.fixed-width {
+  width: 350px;
+}

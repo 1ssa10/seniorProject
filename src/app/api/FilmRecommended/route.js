@@ -4,7 +4,7 @@ export async function GET() {
   const films = await prisma.avgrating.findMany({
     where: {
       average: {
-        gte: 3.5,
+        gte: 3.8,
       },
     },
   });

@@ -19,8 +19,6 @@ export default function Home() {
 
   return (
     <>
-      <SignINComponent />
-      <Recommended />
       <Filmposter />
     </>
   );

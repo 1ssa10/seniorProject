@@ -8,6 +8,8 @@ import Marquee from "react-fast-marquee";
 import { Badge } from "@mui/material";
 import Drawer from "./Drawer";
 import SearchBar from "./SearchBar";
+import Recommended from "./Recommended";
+import SignINComponent from "./SignINComponent";
 
 function HandlePosterClick(id) {
   const url = `/Film/${id}`;
@@ -45,6 +47,8 @@ function Filmposter() {
   return (
     <>
       <SearchBar cats={cats} />
+      <SignINComponent />
+      <Recommended />
 
       {cats.map((cat, index) => (
         <div id={cat.catergory} key={cat.id}>
