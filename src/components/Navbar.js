@@ -10,11 +10,31 @@ import HomeIcon from "@mui/icons-material/Home";
 import GroupsIcon from "@mui/icons-material/Groups";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function Navbar() {
   const session = useSession();
   const user = session.data?.user;
+  const [logger, setlogger] = useState({});
 
+  useEffect(() => {
+    async function fetchUserProfile() {
+      const res = await fetch("http://localhost:3000/api/UserProfile", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: session.data?.user.email,
+        }),
+      });
+
+      const data = await res.json();
+      setlogger(data);
+    }
+    fetchUserProfile();
+  });
   const signOutHandler = () => {
     redirect("/");
     signOut();
@@ -56,7 +76,7 @@ function Navbar() {
                 </button>
               </Link>
 
-              <ProfileImage src={session.data?.user.image} className=" mx-5" />
+              <ProfileImage src={logger.image} className=" mx-5" />
             </>
           )}
         </div>
