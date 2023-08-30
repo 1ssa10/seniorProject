@@ -19,14 +19,6 @@ function SidePanel({ handleSetActive, active, showMenu }) {
         >
           Add Videos
         </div>
-        <div
-          onClick={() => handleSetActive("admins")}
-          className={`px-6 py-3 rounded-lg hover:cursor-pointer ${
-            active === "admins" ? "bg-red-900" : ""
-          }`}
-        >
-          Add Admins
-        </div>
       </div>
     </div>
   );
