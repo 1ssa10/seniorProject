@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma.js";
-import { use } from "react";
 
 export async function POST(request) {
   const body = await request.json();

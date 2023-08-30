@@ -123,7 +123,7 @@ function page() {
     e.preventDefault();
 
     const errors = await validation();
-    console.log(errors);
+
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
@@ -131,7 +131,7 @@ function page() {
       // Your logic for form submission here
       createUser();
       router.push("api/auth/signin");
-      console.log("Form submitted");
+      alert("user created");
     } else {
       // Form validation failed, update the errors state
     }

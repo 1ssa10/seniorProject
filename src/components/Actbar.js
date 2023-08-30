@@ -26,10 +26,10 @@ function Actbar() {
       const data = await res.json();
       setActors(data);
     }
-    console.log(searchitem);
+
     fetchSerachedActor();
   }, [searchitem]);
-  console.log(actors);
+
   return (
     <div className=" relative   mt-4  items-center justify-center  mx-auto ">
       <div className="flex items-center justify-center  ">

@@ -28,7 +28,7 @@ export async function POST(request) {
   );
   try {
     await fsPromises.writeFile(path, buffer);
-    console.log(`open ${path} to see the uploaded file`);
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error writing file:", error);

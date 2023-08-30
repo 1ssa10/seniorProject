@@ -7,7 +7,7 @@ function ActorFilm({ actor }) {
   const toggleShowFilms = () => {
     setShowAllFilms(!showAllFilms);
   };
-  console.log(actor);
+
   return (
     <div>
       <div className="text-gray-300 mb-4">
@@ -36,7 +36,6 @@ function ActorFilm({ actor }) {
                     <div key={film.id} className="w-30">
                       <Link href={`/Film/${film.id}`}>
                         <div className="actor-item flex flex-col items-center mt-2">
-                          {console.log(film.image)}
                           <Image
                             src={film.image}
                             alt="actor"

@@ -34,7 +34,7 @@ function Navbar() {
       setlogger(data);
     }
     fetchUserProfile();
-  });
+  }, []);
   const signOutHandler = () => {
     redirect("/");
     signOut();

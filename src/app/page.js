@@ -14,9 +14,6 @@ export default function Home() {
 
   // if (session.status !== "authenticated") return ;
 
-  console.log(session ? "session" : "no session");
-  console.log(session);
-
   return (
     <>
       <Filmposter />

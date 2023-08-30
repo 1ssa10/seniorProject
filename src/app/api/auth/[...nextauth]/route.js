@@ -35,7 +35,7 @@ const handler = NextAuth({
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
-          console.log(user);
+
           return user;
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
@@ -58,16 +58,10 @@ const handler = NextAuth({
           where: { email: profile.email },
         });
 
-        console.log(existingUser ? existingUser : "no user");
-        console.log(profile.sub);
-        console.log(profile.name);
-        console.log(profile.email);
         const imageUrl = await fetchProfileImage(
           profile.sub,
           account.access_token
         );
-
-        console.log(imageUrl);
 
         if (!existingUser) {
           const user = await prisma.user.create({

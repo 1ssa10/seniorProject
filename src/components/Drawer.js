@@ -8,7 +8,7 @@ function Drawer({ cats }) {
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-  console.log(cats);
+
   return (
     <div className="relative">
       <button

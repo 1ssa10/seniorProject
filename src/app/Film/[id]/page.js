@@ -28,7 +28,13 @@ function Page({ params }) {
   const [alreadyRated, setAlreadyRated] = useState({});
   const [avg, setAVG] = useState();
   const [comerror, setComerror] = useState();
+  const [editcom, setEditcom] = useState(false);
+  const [updateCom, setUpdateCom] = useState("");
+  const [updatedrated, setUpdatedRated] = useState(0);
 
+  const Doubleclickhandler = () => {
+    setEditcom(!editcom);
+  };
   useEffect(() => {
     async function fetchFilmDetails() {
       const res = await fetch("http://localhost:3000/api/FilmContant", {
@@ -110,6 +116,40 @@ function Page({ params }) {
     checkRated();
   }, [comments]);
 
+  const updateCommenting = async (user_id, film_id, nb_stars, comment_d) => {
+    if (comment_d == "") {
+      setComerror("Acomment is required!!");
+    } else {
+      // try {
+      const res = await fetch("http://localhost:3000/api/updateRating", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: user_id,
+          filmid: film_id,
+          nbstars: nb_stars,
+          comment: comment_d,
+        }),
+      });
+    }
+    async function fetchComments() {
+      const res = await fetch("http://localhost:3000/api/fetchcomments", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+        }),
+      });
+      const data = await res.json();
+      setComments(data);
+    }
+    fetchComments();
+  };
+
   const Commenting = async (user_id, film_id, nb_stars, comment_d) => {
     if (comment_d == "") {
       setComerror("Acomment is required!!");
@@ -146,6 +186,7 @@ function Page({ params }) {
     }
     fetchComments();
   };
+
   let now = new Date();
 
   if (session.status !== "authenticated") redirect("/");
@@ -278,26 +319,74 @@ function Page({ params }) {
         <div className="flex flex-col justify-center  items-center gap-2">
           <div>your comment:</div>
 
-          {console.log(alreadyRated.nb_stars)}
           <div className=" w-1/2 overflow-hidden">
-            <div className="bg-gray-800  border border-white  rounded-3xl px-4 pt-2 pb-2.5">
-              <Rating
-                unratedColor="red"
-                ratedColor="red"
-                value={alreadyRated?.nb_stars}
-                size="large"
-                readonly
-              />
-              <Typography
-                color="blue-gray"
-                className="font-medium text-red-700"
-              >
-                {alreadyRated?.nb_stars}.0 Rated
-              </Typography>
-              <div className="text-normal leading-snug md:leading-normal break-words break-all">
-                {alreadyRated.comment?.comment_detail}
+            {editcom ? (
+              <div className=" grid place-items-center">
+                <Rating
+                  unratedColor="red"
+                  ratedColor="red"
+                  size="large"
+                  value={updatedrated}
+                  onChange={(value) => setUpdatedRated(value)}
+                />
+                <div className="py-2 px-4 mb-4   bg-white rounded-lg rounded-t-lg border border-gray-200">
+                  <textarea
+                    className="px-0 h-auto w-96 items-center text-sm text-gray-900 resize-none border-0 focus:ring-0 focus:outline-none"
+                    placeholder="Write a comment..."
+                    value={updateCom}
+                    required
+                    onChange={(e) => setUpdateCom(e.target.value)}
+                  ></textarea>
+                  <p className=" text-red-700">{comerror}</p>
+                </div>
+                <div className="flex">
+                  <button
+                    className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-primary-200  hover:bg-primary-800"
+                    onClick={Doubleclickhandler}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-primary-200  hover:bg-primary-800"
+                    onClick={() => {
+                      updateCommenting(
+                        session.data.user.id,
+                        id,
+                        updatedrated,
+                        updateCom
+                      );
+                      Doubleclickhandler();
+                    }}
+                  >
+                    Post comment
+                  </button>
+                </div>
+                {/* {console.log(session.data.user.id)} */}
               </div>
-            </div>
+            ) : (
+              <div
+                className="bg-gray-800  border border-white  rounded-3xl px-4 pt-2 pb-2.5"
+                onDoubleClick={Doubleclickhandler}
+              >
+                {/* <Rating
+                  unratedColor="red"
+                  ratedColor="red"
+                  value={alreadyRated?.nb_stars}
+                  size="large"
+                  readonly
+                /> */}
+                <Typography
+                  color="blue-gray"
+                  className="font-medium text-red-700"
+                >
+                  {alreadyRated?.nb_stars}.0 Rated
+                </Typography>
+                <div className="text-normal leading-snug md:leading-normal break-words break-all">
+                  {alreadyRated.comment?.comment_detail}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ) : (

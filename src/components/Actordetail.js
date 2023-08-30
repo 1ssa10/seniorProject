@@ -19,8 +19,6 @@ function Actordetail({ id }) {
 
     const data = await res.json();
     setActor(data);
-    console.log(data);
-    console.log(actor);
   }
   useEffect(() => {
     fetchActorDetails();
