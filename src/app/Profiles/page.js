@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import React, { use, useState } from "react";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
-import { set } from "lodash";
 
 function Profile() {
   const session = useSession();
@@ -30,8 +29,6 @@ function Profile() {
         image: file.name,
       }),
     });
-
-    session.data.user.image = "/images/" + file.name;
   }
 
   useEffect(() => {
@@ -77,6 +74,8 @@ function Profile() {
       if (!res.ok) throw new Error(await res.text());
       // setprofilePic(`/images/${file.name}`);
       // setSave(false);
+      session.data.user.image = "/images/" + file.name;
+      console.log(session);
       updateProfile(file);
     } catch (e) {
       //Handle errors here

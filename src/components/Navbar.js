@@ -67,7 +67,7 @@ function Navbar() {
               >
                 Sign In
               </button>
-              <ProfileImage className=" mx-5" />
+              <ProfileImage className=" mx-5 hidden" />
             </>
           ) : (
             <>
@@ -81,7 +81,10 @@ function Navbar() {
                 </button>
               </Link>
 
-              <ProfileImage src={session.data.user.image} className=" mx-5" />
+              <ProfileImage
+                src={session.data.user.image}
+                className=" mx-5 hidden"
+              />
             </>
           )}
         </div>
@@ -89,7 +92,7 @@ function Navbar() {
           className="items-center justify-center hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-sticky"
         >
-          <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium   md:flex-row md:space-x-8 md:mt-0 md:border-0">
+          <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium   md:flex-row md:space-x-8 md:mt-0 md:border-0 mr-20">
             <li className=" ">
               <Link
                 href="/"
@@ -117,7 +120,7 @@ function Navbar() {
             </li>
             <li>
               <Link
-                href="#"
+                href="/admin"
                 className="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-700 md:p-0"
               >
                 <SettingsIcon />
