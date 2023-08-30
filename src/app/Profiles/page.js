@@ -31,17 +31,7 @@ function Profile() {
       }),
     });
 
-    const updatedUser = {
-      ...session.data.user,
-      image: "/images/" + file.name, // New image path
-    };
-
-    await session.update({
-      session: session,
-      data: {
-        user: updatedUser,
-      },
-    });
+    session.data.user.image = "/images/" + file.name;
   }
 
   useEffect(() => {

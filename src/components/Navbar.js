@@ -16,25 +16,30 @@ import { useEffect } from "react";
 function Navbar() {
   const session = useSession();
   const user = session.data?.user;
-  const [logger, setlogger] = useState({});
+  const [logger, setlogger] = useState();
+  const [image, setImage] = useState("");
+  // useEffect(() => {
+  //   async function fetchUserProfile() {
+  //     const res = await fetch("http://localhost:3000/api/UserProfile", {
+  //       method: "POST",
+  //       headers: {
+  //         "content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         email: session.data?.user.email,
+  //       }),
+  //     });
 
-  useEffect(() => {
-    async function fetchUserProfile() {
-      const res = await fetch("http://localhost:3000/api/UserProfile", {
-        method: "POST",
-        headers: {
-          "content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: session.data?.user.email,
-        }),
-      });
+  //     const data = await res.json();
+  //     setlogger(data);
+  //     setImage(data.image);
+  //   }
+  //   fetchUserProfile();
+  // }, []);
 
-      const data = await res.json();
-      setlogger(data);
-    }
-    fetchUserProfile();
-  }, []);
+  // console.log(logger?.image);
+  // console.log(image);
+  // console.log(logger);
   const signOutHandler = () => {
     redirect("/");
     signOut();
@@ -76,7 +81,7 @@ function Navbar() {
                 </button>
               </Link>
 
-              <ProfileImage src={logger.image} className=" mx-5" />
+              <ProfileImage src={session.data.user.image} className=" mx-5" />
             </>
           )}
         </div>
