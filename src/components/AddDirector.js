@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function AddActor() {
+function AddDirector({ setdirector }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
@@ -12,7 +12,7 @@ function AddActor() {
   const [file, setfile] = useState();
 
   async function handleAddActor() {
-    const res = await fetch("http://localhost:3000/api/AddActor", {
+    const res = await fetch("http://localhost:3000/api/AddDirector", {
       method: "POST",
       headers: {
         "content-Type": "application/json",
@@ -27,6 +27,8 @@ function AddActor() {
         image: file.name,
       }),
     });
+    const data = res.json();
+    setdirector(data);
   }
 
   const handleFileChange = (e) => {
@@ -58,11 +60,12 @@ function AddActor() {
   return (
     // <div className="bg-gray-900 min-h-screen flex items-center justify-center">
     <div className="bg-gray-800 p-8 rounded shadow-md w-96">
-      <h2 className="text-2xl font-semibold mb-4">Add Actor</h2>
+      <h2 className="text-2xl font-semibold mb-4">Add Director</h2>
       <form>
         <label className="block mb-3">
           First Name:
           <input
+            required
             type="text"
             className="w-full border px-2 py-1 rounded focus:outline-none focus:ring ring-red-700 focus:border-red-500 text-black"
             value={firstName}
@@ -72,6 +75,7 @@ function AddActor() {
         <label className="block mb-3">
           Last Name:
           <input
+            required
             type="text"
             className="w-full border px-2 py-1 rounded focus:outline-none focus:ring ring-red-700 focus:border-red-500 text-black"
             value={lastName}
@@ -81,6 +85,7 @@ function AddActor() {
         <label className="block mb-3">
           Age:
           <input
+            required
             type="number"
             className="w-full border px-2 py-1 rounded focus:outline-none  focus:ring ring-red-700 focus:border-red-500 text-black"
             value={age}
@@ -90,6 +95,7 @@ function AddActor() {
         <label className="block mb-3">
           Nationality
           <input
+            required
             type="text"
             className="w-full border px-2 py-1 rounded focus:outline-none focus:ring ring-red-700 focus:border-red-500 text-black"
             value={nationality}
@@ -99,6 +105,7 @@ function AddActor() {
         <label className="block mb-3">
           Date of Birth
           <input
+            required
             type="date"
             id="dob"
             value={dob}
@@ -115,12 +122,12 @@ function AddActor() {
           >
             <option value="male">Male</option>
             <option value="female">Female</option>
-            <option value="other">Other</option>
           </select>
         </label>
         <label className="block mb-3">
           Image URL:
           <input
+            required
             type="text"
             className="w-full border px-2 py-1 rounded focus:outline-none focus:ring ring-red-700 focus:border-red-500 text-black"
             value={file?.name}
@@ -128,6 +135,7 @@ function AddActor() {
           />
         </label>
         <input
+          required
           type="file"
           accept="image/*"
           onChange={handleFileChange}
@@ -138,10 +146,10 @@ function AddActor() {
           type="button"
           className="bg-red-500  text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none  focus:border-red-300"
           onClick={(e) => {
-            handleAddActor(), onSubmit(e);
+            handleAddActor(), onSubmit(e), alert("director added");
           }}
         >
-          Add Actor
+          Add Director
         </button>
       </form>
     </div>
@@ -149,4 +157,4 @@ function AddActor() {
   );
 }
 
-export default AddActor;
+export default AddDirector;

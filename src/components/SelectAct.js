@@ -2,11 +2,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import AddActor from "./AddActor";
 
 function SelectAct({ setSelected }) {
   const [searchitem, setSearchitem] = useState("");
   const [actors, setActors] = useState([]);
   const [selectedactor, setSelectedActors] = useState([]);
+
   // const searchHandler = (e) => {
   //   setSearchitem((prev) => e.target.value);
   // };
@@ -100,8 +102,13 @@ function SelectAct({ setSelected }) {
           />
         </div>
         {/* </form> */}
+        <button
+          className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring ring-red-500 focus:border-red-300"
+          onClick={(e) => onSubmit(e)}
+        >
+          save
+        </button>
       </div>
-      <button onClick={(e) => onSubmit(e)}>save</button>
       <div className=" absolute z-10 left-1/2 transform -translate-x-1/2">
         {searchitem !== "" && (
           <div className=" inset-0 flex justify-center items-center">
@@ -122,13 +129,17 @@ function SelectAct({ setSelected }) {
                         //   (window.location.href = `/Film/${actor.id}`)
                         // }
                       />
-                      <span>
-                        {actor.first_name}
-                        <br />
-                        {actor.last_name}
-                      </span>
-                      {/* {console.log(selectedactor[0].selected)} */}
-                      {/* {selectedactor[0].selected ? null : (
+                      <div className=" flex flex-col">
+                        <div>
+                          <span>
+                            {actor.first_name}
+                            <br />
+                            {actor.last_name}
+                          </span>
+                        </div>
+                        <div>
+                          {/* {console.log(selectedactor[0].selected)} */}
+                          {/* {selectedactor[0].selected ? null : (
                         <button
                           type="checkbox"
                           onClick={(e) => selectactorhandler(actor, e, index)}
@@ -136,23 +147,28 @@ function SelectAct({ setSelected }) {
                           click here
                         </button>
                       )} */}
-                      {selectedactor.some(
-                        (selectedActor) => selectedActor.id === actor.id
-                      ) ? (
-                        <button
-                          type="checkbox"
-                          onClick={(e) => selectactorhandler(actor, e)}
-                        >
-                          Unselect
-                        </button>
-                      ) : (
-                        <button
-                          type="checkbox"
-                          onClick={(e) => selectactorhandler(actor, e)}
-                        >
-                          Select
-                        </button>
-                      )}
+
+                          {selectedactor.some(
+                            (selectedActor) => selectedActor.id === actor.id
+                          ) ? (
+                            <button
+                              type="checkbox"
+                              className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring ring-red-500 focus:border-red-300"
+                              onClick={(e) => selectactorhandler(actor, e)}
+                            >
+                              Unselect
+                            </button>
+                          ) : (
+                            <button
+                              type="checkbox"
+                              className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring ring-red-500 focus:border-red-300"
+                              onClick={(e) => selectactorhandler(actor, e)}
+                            >
+                              Select
+                            </button>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
