@@ -64,7 +64,7 @@ function AddActor() {
             First Name:
             <input
               type="text"
-              className="w-full border px-2 py-1 rounded focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full border px-2 py-1 rounded focus:outline-none focus:ring ring-red-700 focus:border-red-500 text-black"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
@@ -73,7 +73,7 @@ function AddActor() {
             Last Name:
             <input
               type="text"
-              className="w-full border px-2 py-1 rounded focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full border px-2 py-1 rounded focus:outline-none focus:ring ring-red-700 focus:border-red-500 text-black"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
@@ -82,7 +82,7 @@ function AddActor() {
             Age:
             <input
               type="number"
-              className="w-full border px-2 py-1 rounded focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full border px-2 py-1 rounded focus:outline-none  focus:ring ring-red-700 focus:border-red-500 text-black"
               value={age}
               onChange={(e) => setAge(e.target.value)}
             />
@@ -91,7 +91,7 @@ function AddActor() {
             Nationality
             <input
               type="text"
-              className="w-full border px-2 py-1 rounded focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full border px-2 py-1 rounded focus:outline-none focus:ring ring-red-700 focus:border-red-500 text-black"
               value={nationality}
               onChange={(e) => setNationality(e.target.value)}
             />
@@ -102,13 +102,14 @@ function AddActor() {
               type="date"
               id="dob"
               value={dob}
+              className=" text-black"
               onChange={(e) => setDob(e.target.value)}
             />
           </label>
           <label className="block mb-3">
             Gender:
             <select
-              className="w-full border px-2 py-1 rounded focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full border px-2 py-1 rounded focus:outline-none focus:ring ring-red-700  focus:border-red-500 text-black"
               value={gender}
               onChange={(e) => setGender(e.target.value)}
             >
@@ -121,7 +122,7 @@ function AddActor() {
             Image URL:
             <input
               type="text"
-              className="w-full border px-2 py-1 rounded focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full border px-2 py-1 rounded focus:outline-none focus:ring ring-red-700 focus:border-red-500 text-black"
               value={file?.name}
               onChange={(e) => setImage(e.target.value)}
             />
@@ -135,7 +136,7 @@ function AddActor() {
 
           <button
             type="button"
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+            className="bg-red-500  text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none  focus:border-red-300"
             onClick={(e) => {
               handleAddActor(), onSubmit(e);
             }}

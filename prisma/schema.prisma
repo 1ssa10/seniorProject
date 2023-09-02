@@ -47,10 +47,10 @@ model Profile {
 model Film {
   id              String     @id @default(uuid())
   title           String
-  description     String
+  description     String     @db.LongText
   age_restriction Int?
   language        String?
-  duration        DateTime
+  duration        String
   image           String
   Actors          Actor[]
   Categories      Category[]
