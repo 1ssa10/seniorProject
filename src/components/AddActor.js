@@ -124,6 +124,7 @@ function AddActor() {
             type="text"
             className="w-full border px-2 py-1 rounded focus:outline-none focus:ring ring-red-700 focus:border-red-500 text-black"
             value={file?.name}
+            readOnly
             onChange={(e) => setImage(e.target.value)}
           />
         </label>

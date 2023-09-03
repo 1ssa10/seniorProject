@@ -9,6 +9,8 @@ import AddActor from "@/components/AddActor";
 import Actbar from "@/components/Actbar";
 import SelectAct from "@/components/SelectAct";
 import AddDirector from "@/components/AddDirector";
+import SelectDirecBar from "@/components/SelectDirecBar";
+import SelectCategories from "@/components/SelectCategories";
 
 function AdminPanel() {
   const [title, setTitle] = useState("");
@@ -20,8 +22,10 @@ function AdminPanel() {
   const [selectedActors, setSelectedActors] = useState([]);
   const [actors, setActors] = useState([]);
   const [showact, setShowAct] = useState(false);
+  const [showdir, setShowDir] = useState(false);
   const [trailer, setTrailer] = useState("");
   const [director, setDirector] = useState({});
+  const [file, setfile] = useState();
 
   useEffect(() => {
     async function fetchActs() {
@@ -33,10 +37,42 @@ function AdminPanel() {
   }, []);
 
   console.log(selectedActors);
+  console.log(director);
 
   const showAddActor = (e) => {
     e.preventDefault();
     setShowAct(!showact);
+  };
+  const showAddDirector = (e) => {
+    e.preventDefault();
+    setShowDir(!showdir);
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setfile(selectedFile);
+    }
+  };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (!file) return;
+
+    try {
+      const data = new FormData();
+      data.set("file", file);
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: data,
+      });
+      // handle the error
+      if (!res.ok) throw new Error(await res.text());
+      // setprofilePic(`/images/${file.name}`);
+      // setSave(false);
+    } catch (e) {
+      //Handle errors here
+      console.error(e);
+    }
   };
   return (
     <div className="bg-gray-900  flex  items-center justify-center">
@@ -48,7 +84,33 @@ function AdminPanel() {
             Select Actors:
             <SelectAct setSelected={setSelectedActors} />
           </label>
-          <div className=" grid grid-cols-2">
+          <label className="block mb-3">
+            Select Director:
+            <SelectDirecBar setdirector={setDirector} />
+          </label>
+          <div className="grid grid-cols-2">
+            <div>
+              cant find actor :
+              <button
+                onClick={(e) => showAddActor(e)}
+                className="bg-red-500 text-white py-2 ml-32 h-fit px-4 rounded hover:bg-red-600 focus:outline-none focus:ring ring-red-500 focus:border-red-300"
+              >
+                Add Actor
+              </button>
+              {showact && <AddActor />}
+            </div>
+            <div>
+              cant find director:
+              <button
+                onClick={(e) => showAddDirector(e)}
+                className="bg-red-500 text-white py-2 ml-32 h-fit px-4 rounded hover:bg-red-600 focus:outline-none focus:ring ring-red-500 focus:border-red-300"
+              >
+                Add director
+              </button>
+              {showdir && <AddDirector />}
+            </div>
+          </div>
+          <div className="flex justify-center items-center">
             <div className="w-fit border">
               <label className="block mb-3">
                 Title:
@@ -91,6 +153,16 @@ function AdminPanel() {
                 />
               </label>
               <label className="block mb-3">
+                duration in mins :
+                <br />
+                <input
+                  type="number"
+                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500"
+                  value={duration}
+                  onChange={(e) => setDuration(e.target.value)}
+                />
+              </label>
+              <label className="block mb-3">
                 Trialer :
                 <br />
                 <input
@@ -100,26 +172,35 @@ function AdminPanel() {
                   onChange={(e) => setTrailer(e.target.value)}
                 />
               </label>
+              <label className="block mb-3">
+                Image URL:
+                <input
+                  type="text"
+                  className="w-full border px-2 py-1 rounded focus:outline-none focus:ring ring-red-700 focus:border-red-500 text-black"
+                  value={file?.name}
+                  readOnly
+                  onChange={(e) => setImage(e.target.value)}
+                />
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="mt-2"
+              />
+              <SelectCategories />
               {/* Other form fields */}
               {/* ... */}
-              <AddDirector setdirector={setDirector} />
+
               {console.log(director)}
 
               <button
                 type="button"
                 className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring ring-red-500 focus:border-red-300"
+                onClick={(e) => onSubmit(e)}
               >
                 Add Film
               </button>
-            </div>
-            <div className="flex">
-              <button
-                onClick={(e) => showAddActor(e)}
-                className="bg-red-500 text-white py-2 ml-32 h-fit px-4 rounded hover:bg-red-600 focus:outline-none focus:ring ring-red-500 focus:border-red-300"
-              >
-                Add Actor
-              </button>
-              {showact && <AddActor />}
             </div>
           </div>
         </form>
