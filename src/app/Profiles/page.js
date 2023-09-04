@@ -62,6 +62,7 @@ function Profile() {
   };
 
   const onSubmit = async (e) => {
+    setSave(false);
     e.preventDefault();
     if (!file) return;
 
@@ -88,43 +89,45 @@ function Profile() {
   if (session.status !== "authenticated") redirect("/");
 
   return (
-    <div className="bg-gray-900 p-6 rounded-lg shadow-md h-screen">
-      <div className="text-center mb-4">
-        <img
-          src={profilePic}
-          alt="Profile Avatar"
-          className="w-32 h-32 rounded-full mx-auto border-4 border-white"
-        />
-        <br />
-        <label className="bg-red-700  text-white font-bold hover:bg-transparent  hover: border border-red-700 hover:text-red-700  py-2 px-4 rounded-full mt-3 ">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="mt-2 hidden"
+    <div className="flex justify-center items-center h-screen">
+      <div className=" w-1/2 flex justify-center items-center p-4 rounded-lg">
+        <div className="flex flex-col items-center bg-gray-900 border border-gray-900 rounded-lg shadow md:flex-row md:max-w-xl  w-full">
+          <img
+            className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+            src={profilePic}
+            alt="Profile Avatar"
+            width={280}
+            height={420}
           />
-          Edit
-        </label>
-        <br />
-        {showSave ? (
-          <>
-            <button
-              className="bg-red-700  text-white font-bold hover:bg-transparent  hover: border border-red-700 hover:text-red-700  py-2 px-4 rounded-full mt-3"
-              type="submit"
-              onClick={onSubmit}
-            >
-              save
-            </button>
-          </>
-        ) : null}
+          <div className="flex flex-col justify-center items-center p-4 leading-normal">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-red-700">
+              {user.name}
+            </h5>
+            <h2 className="text-xl font-semibold mb-2">Contact Information</h2>
+            <p className="text-gray-700">Email: {user.email}</p>
+          </div>
 
-        <h1 className="text-2xl mt-4">{user.name}</h1>
-        <p className="text-gray-600">RATEROO MEMBER</p>
-      </div>
-      <div className="">
-        <div className="">
-          <h2 className="text-xl font-semibold mb-2">Contact Information</h2>
-          <p className="text-gray-700">Email: {user.email}</p>
+          <label className="bg-red-700  text-white font-bold hover:bg-transparent  hover: border border-red-700 hover:text-red-700  py-2 px-4 rounded-full mt-3 ">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="mt-2 hidden"
+            />
+            Edit
+          </label>
+          <br />
+          {showSave ? (
+            <>
+              <button
+                className="bg-red-700  text-white font-bold hover:bg-transparent  hover: border border-red-700 hover:text-red-700  py-2 px-4 rounded-full mt-3"
+                type="submit"
+                onClick={onSubmit}
+              >
+                save
+              </button>
+            </>
+          ) : null}
         </div>
       </div>
     </div>
