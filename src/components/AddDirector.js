@@ -27,8 +27,8 @@ function AddDirector({ setdirector }) {
         image: file.name,
       }),
     });
-    const data = res.json();
-    setdirector(data);
+    // const data = res.json();
+    // setdirector(data);
   }
 
   const handleFileChange = (e) => {

@@ -15,7 +15,7 @@ import SelectCategories from "@/components/SelectCategories";
 function AdminPanel() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [ageRestriction, setAgeRestriction] = useState("");
+  const [ageRestriction, setAgeRestriction] = useState();
   const [language, setLanguage] = useState("");
   const [duration, setDuration] = useState();
   const [image, setImage] = useState("");
@@ -26,6 +26,7 @@ function AdminPanel() {
   const [trailer, setTrailer] = useState("");
   const [director, setDirector] = useState({});
   const [file, setfile] = useState();
+  const [Categories, setcategories] = useState([]);
 
   useEffect(() => {
     async function fetchActs() {
@@ -74,6 +75,28 @@ function AdminPanel() {
       console.error(e);
     }
   };
+
+  async function handleAddFilm() {
+    const res = await fetch("http://localhost:3000/api/AddFilm", {
+      method: "POST",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: title,
+        description: description,
+        ageRestriction: ageRestriction,
+        language: language,
+        duration: duration,
+        trailer: trailer,
+        Actors: selectedActors,
+        director: director,
+        image: file.name,
+        Categories: Categories,
+      }),
+    });
+    console.log("adding");
+  }
   return (
     <div className="bg-gray-900  flex  items-center justify-center">
       {/* <AddActor /> */}
@@ -117,7 +140,7 @@ function AdminPanel() {
                 <br />
                 <input
                   type="text"
-                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500"
+                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500 text-black"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
@@ -127,7 +150,7 @@ function AdminPanel() {
                 <br />
                 <textarea
                   type="text"
-                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500"
+                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500 text-black"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
@@ -137,7 +160,7 @@ function AdminPanel() {
                 <br />
                 <input
                   type="text"
-                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500"
+                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500 text-black"
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
                 />
@@ -147,7 +170,7 @@ function AdminPanel() {
                 <br />
                 <input
                   type="number"
-                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500"
+                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500 text-black"
                   value={ageRestriction}
                   onChange={(e) => setAgeRestriction(e.target.value)}
                 />
@@ -157,7 +180,7 @@ function AdminPanel() {
                 <br />
                 <input
                   type="number"
-                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500"
+                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500 text-black"
                   value={duration}
                   onChange={(e) => setDuration(e.target.value)}
                 />
@@ -167,7 +190,7 @@ function AdminPanel() {
                 <br />
                 <input
                   type="text"
-                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500"
+                  className="w-96 border px-2 py-1 rounded focus:outline-none focus:ring ring-red-500 focus:border-red-500 text-black"
                   value={trailer}
                   onChange={(e) => setTrailer(e.target.value)}
                 />
@@ -188,16 +211,14 @@ function AdminPanel() {
                 onChange={handleFileChange}
                 className="mt-2"
               />
-              <SelectCategories />
+              <SelectCategories setcategories={setcategories} />
               {/* Other form fields */}
               {/* ... */}
-
-              {console.log(director)}
 
               <button
                 type="button"
                 className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring ring-red-500 focus:border-red-300"
-                onClick={(e) => onSubmit(e)}
+                onClick={((e) => onSubmit(e), () => handleAddFilm())}
               >
                 Add Film
               </button>

@@ -3,16 +3,25 @@ import prisma from "@/lib/prisma";
 export async function POST(request) {
   const body = await request.json();
   console.log(body);
-  const actor = await prisma.actor.create({
+  console.log("click");
+  const film = await prisma.film.create({
     data: {
-      first_name: body.first_name,
-      last_name: body.last_name,
-      age: parseInt(body.age) || null,
-      DOb: body.DOB,
-      nationality: body.nationality,
-      gender: body.gender,
+      title: body.title,
+      description: body.description,
+      age_restriction: parseInt(body.ageRestriction) || null,
+      language: body.language,
+      duration: body.duration,
+      trailer: body.trailer,
+      Actors: {
+        connect: body.Actors.map((actor) => ({ id: actor.id })),
+      },
+      directorId: body.director.id,
+
       image: "/images/" + body.image,
+      Categories: {
+        connect: body.Categories.map((cat) => ({ id: cat.id })),
+      },
     },
   });
-  return new Response(JSON.stringify(actor));
+  return new Response(JSON.stringify(film));
 }

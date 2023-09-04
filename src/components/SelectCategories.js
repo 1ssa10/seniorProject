@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function SelectCategories({ setcategories }) {
   const [cats, setCats] = useState([]);
-  const [selectedCats, setSelectedCats] = useState([{}]);
+  const [selectedCats, setSelectedCats] = useState([]);
   // const [direction, setDirection] = useState(false);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ function SelectCategories({ setcategories }) {
     fetchCats();
   }, []);
 
-  console.log(selectedCats);
+  setcategories(selectedCats);
   return (
     <div>
       <label
@@ -31,14 +31,23 @@ function SelectCategories({ setcategories }) {
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         name="category"
         multiple
-        onChange={(e) =>
-          setSelectedCats(
-            Array.from(e.target.selectedOptions, (option) => option.value)
-          )
-        }
+        // onChange={(e) =>
+        //   setSelectedCats(
+        //     Array.from(e.target.selectedOptions, (option) => option.value)
+        //   )
+        // }
+        onChange={(e) => {
+          const selectedCategoryObjects = Array.from(
+            e.target.selectedOptions,
+            (option) => {
+              return cats.find((cat) => cat.id === option.value); // Assuming 'cats' is your category data array
+            }
+          );
+          setSelectedCats(selectedCategoryObjects);
+        }}
       >
         {cats.map((cat, index) => (
-          <option value={cat} key={cat.id}>
+          <option value={cat.id} key={cat.id}>
             {cat.catergory}
           </option>
         ))}

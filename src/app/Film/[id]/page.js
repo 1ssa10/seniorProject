@@ -63,24 +63,25 @@ function Page({ params }) {
       const data = await res.json();
       setComments(data);
     }
-    async function fetchDirector() {
-      const res = await fetch("http://localhost:3000/api/director", {
-        method: "POST",
-        headers: {
-          "content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: film.directorId,
-        }),
-      });
-      const data = await res.json();
-      setDirector(data);
-    }
 
     fetchFilmDetails();
     fetchComments();
-    fetchDirector();
   }, [id]);
+  async function fetchDirector() {
+    const res = await fetch("http://localhost:3000/api/director", {
+      method: "POST",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: film.directorId,
+      }),
+    });
+    const data = await res.json();
+    setDirector(data);
+  }
+
+  fetchDirector();
 
   useEffect(() => {
     async function avgRate() {
@@ -95,7 +96,7 @@ function Page({ params }) {
       });
       const data = await res.json();
 
-      setAVG(parseFloat(data.average.toFixed(1)));
+      setAVG(parseFloat(data?.average.toFixed(1)));
     }
     async function checkRated() {
       const res = await fetch("http://localhost:3000/api/CheckRated", {
@@ -433,63 +434,67 @@ function Page({ params }) {
         <div></div>
       )}
       <div className=" flex justify-center relative">
-        <div className=" grid-cols-1 sm:w-1/2 w-full bg-gray-900 overflow-y-auto  h-96 scrollbar scrollbar-track-gray-900 scrollbar-thumb-red-700 scrollbar-thumb-rounded rounded-xl ">
-          {comments?.map((com) => (
-            <div
-              key={com?.commentId}
-              className=" text-black p-4 flex max-w-3xl"
-            >
-              <div>
-                <ProfileImage
-                  src={com.rater?.image}
-                  className="rounded-full h-8 w-8 mr-2 mt-1"
-                />
-              </div>
-              <div className=" w-full overflow-hidden">
-                <div className="bg-gray-800  border border-white  rounded-3xl px-4 pt-2 pb-2.5">
-                  <div className="font-semibold text-sm leading-relaxed">
-                    {com.rater.name}
-                  </div>
-                  <Rating
-                    unratedColor="red"
-                    ratedColor="red"
-                    value={com.nb_stars}
-                    readonly
-                    // className=" flex justify-end"
+        {comments.length === 0 ? (
+          <div className="text-red-700">No Comments yet...</div>
+        ) : (
+          <div className=" grid-cols-1 sm:w-1/2 w-full bg-gray-900 overflow-y-auto  h-96 scrollbar scrollbar-track-gray-900 scrollbar-thumb-red-700 scrollbar-thumb-rounded rounded-xl ">
+            {comments?.map((com) => (
+              <div
+                key={com?.commentId}
+                className=" text-black p-4 flex max-w-3xl"
+              >
+                <div>
+                  <ProfileImage
+                    src={com.rater?.image}
+                    className="rounded-full h-8 w-8 mr-2 mt-1"
                   />
-                  <div className="text-normal leading-snug md:leading-normal break-words">
-                    {com.comment?.comment_detail}
+                </div>
+                <div className=" w-full overflow-hidden">
+                  <div className="bg-gray-800  border border-white  rounded-3xl px-4 pt-2 pb-2.5">
+                    <div className="font-semibold text-sm leading-relaxed">
+                      {com.rater.name}
+                    </div>
+                    <Rating
+                      unratedColor="red"
+                      ratedColor="red"
+                      value={com.nb_stars}
+                      readonly
+                      // className=" flex justify-end"
+                    />
+                    <div className="text-normal leading-snug md:leading-normal break-words">
+                      {com.comment?.comment_detail}
+                    </div>
+                  </div>
+                  <div className="text-sm ml-4 mt-0.5 text-gray-500 dark:text-gray-400">
+                    {parseInt(now - new Date(com.date)) >= 0 &&
+                      parseInt(now - new Date(com.date)) < 60000 && (
+                        <span>
+                          {parseInt((now - new Date(com.date)) / 1000)} s
+                        </span>
+                      )}
+                    {parseInt((now - new Date(com.date)) / 1000) >= 60 &&
+                      parseInt((now - new Date(com.date)) / 1000) < 3600 && (
+                        <span>
+                          {parseInt((now - new Date(com.date)) / 60000)} m
+                        </span>
+                      )}
+                    {parseInt((now - new Date(com.date)) / 60000) >= 60 &&
+                      parseInt((now - new Date(com.date)) / 3600000) < 24 && (
+                        <span>
+                          {parseInt((now - new Date(com.date)) / 3600000)} h
+                        </span>
+                      )}
+                    {parseInt((now - new Date(com.date)) / 3600000) >= 24 && (
+                      <span>
+                        {parseInt((now - new Date(com.date)) / 86400000)} d
+                      </span>
+                    )}
                   </div>
                 </div>
-                <div className="text-sm ml-4 mt-0.5 text-gray-500 dark:text-gray-400">
-                  {parseInt(now - new Date(com.date)) >= 0 &&
-                    parseInt(now - new Date(com.date)) < 60000 && (
-                      <span>
-                        {parseInt((now - new Date(com.date)) / 1000)} s
-                      </span>
-                    )}
-                  {parseInt((now - new Date(com.date)) / 1000) >= 60 &&
-                    parseInt((now - new Date(com.date)) / 1000) < 3600 && (
-                      <span>
-                        {parseInt((now - new Date(com.date)) / 60000)} m
-                      </span>
-                    )}
-                  {parseInt((now - new Date(com.date)) / 60000) >= 60 &&
-                    parseInt((now - new Date(com.date)) / 3600000) < 24 && (
-                      <span>
-                        {parseInt((now - new Date(com.date)) / 3600000)} h
-                      </span>
-                    )}
-                  {parseInt((now - new Date(com.date)) / 3600000) >= 24 && (
-                    <span>
-                      {parseInt((now - new Date(com.date)) / 86400000)} d
-                    </span>
-                  )}
-                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </form>
   );
