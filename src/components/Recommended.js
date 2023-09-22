@@ -26,7 +26,7 @@ function Recommended() {
 
     setReco(recommended);
 
-    const numRandomFilms = 3; // Number of random films you want to display
+    const numRandomFilms = 3; // Number of random films  want to display
     const randomIndices = [];
     if (recommended.length >= numRandomFilms) {
       while (randomIndices.length < numRandomFilms) {

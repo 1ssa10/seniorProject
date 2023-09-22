@@ -88,7 +88,7 @@ function Filmposter() {
                           // }}
                         />
                       </div>
-                      <p>{film.title}</p>
+                      <p className=" text-center break-words">{film.title}</p>
                     </Link>
                   </div>
                 ))}

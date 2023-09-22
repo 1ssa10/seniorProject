@@ -20,14 +20,14 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Providers>
-          <div className="container mx-auto flex items-start sm:pr-4">
-            {/* <Sidenav /> */}
+          {/* <div className="container mx-auto flex items-start sm:pr-4"> */}
+          {/* <Sidenav /> */}
 
-            <div className=" min-h-fit  mx-1 flex-grow border-x border-red-700">
-              <Navbar />
-              {children}
-            </div>
+          <div className=" min-h-fit  mx-1 flex-grow border-x border-red-700">
+            <Navbar />
+            {children}
           </div>
+          {/* </div> */}
         </Providers>
       </body>
     </html>

@@ -22,7 +22,7 @@ export default function Loading() {
             id="style-2"
           >
             <div className="film-list " tabIndex="0">
-              {Array.from({ length: 7 }, (_, i) => i + 1).map((id) => (
+              {Array.from({ length: 9 }, (_, i) => i + 1).map((id) => (
                 <div key={id} className=" flex-none w-30">
                   <div className="film-item flex flex-col items-center mt-2">
                     <Skeleton

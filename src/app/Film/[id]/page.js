@@ -67,6 +67,7 @@ function Page({ params }) {
     fetchFilmDetails();
     fetchComments();
   }, [id]);
+
   async function fetchDirector() {
     const res = await fetch("http://localhost:3000/api/director", {
       method: "POST",

@@ -8,7 +8,7 @@ function AddActor() {
   const [gender, setGender] = useState("male");
   const [image, setImage] = useState("");
   const [nationality, setNationality] = useState("");
-  const [dob, setDob] = useState("");
+  const [dob, setDob] = useState();
   const [file, setfile] = useState();
 
   async function handleAddActor() {
@@ -139,7 +139,7 @@ function AddActor() {
           type="button"
           className="bg-red-500  text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none  focus:border-red-300"
           onClick={(e) => {
-            handleAddActor(), onSubmit(e);
+            handleAddActor(), onSubmit(e), alert("actor added");
           }}
         >
           Add Actor

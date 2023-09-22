@@ -8,7 +8,7 @@ export async function POST(request) {
       first_name: body.first_name,
       last_name: body.last_name,
       age: parseInt(body.age) || null,
-      DOb: body.DOB,
+      DOb: new Date(body.dob),
       nationality: body.nationality,
       gender: body.gender,
       image: "/images/" + body.image,

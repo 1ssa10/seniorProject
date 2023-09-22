@@ -57,15 +57,17 @@ function AdminPanel() {
   };
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!file) return;
+    if (!file) return console.log("no file");
 
     try {
       const data = new FormData();
+      console.log(data);
       data.set("file", file);
       const res = await fetch("/api/upload", {
         method: "POST",
         body: data,
       });
+      handleAddFilm();
       // handle the error
       if (!res.ok) throw new Error(await res.text());
       // setprofilePic(`/images/${file.name}`);
@@ -218,7 +220,7 @@ function AdminPanel() {
               <button
                 type="button"
                 className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring ring-red-500 focus:border-red-300"
-                onClick={((e) => onSubmit(e), () => handleAddFilm())}
+                onClick={(e) => onSubmit(e)}
               >
                 Add Film
               </button>

@@ -6,7 +6,7 @@ import { promises as fsPromises } from "fs";
 export async function POST(request) {
   const data = await request.formData();
   const file = data.get("file");
-
+  console.log(file);
   if (!file) {
     return NextResponse.json({ success: false });
   }
