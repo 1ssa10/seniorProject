@@ -56,7 +56,7 @@ function Recommended() {
           {randomfilm.map((film) => (
             <div
               key={film?.id}
-              className=" fixed-width m-8 flex h-50 rounded-lg bg-gray-800 shadow-red"
+              className="  m-8 flex h-50 rounded-lg bg-gray-800 shadow-red"
             >
               <div
                 className="relative overflow-hidden bg-cover bg-no-repeat"
@@ -75,7 +75,7 @@ function Recommended() {
                 </Link>
               </div>
               <div className="p-6 relative">
-                <h5 className="mb-2  font-medium leading-tight text-neutral-800  text-red-700 text-2xl">
+                <h5 className="mb-2  font-medium leading-tight text-neutral-800  text-red-700 text-2xl break-words">
                   {film?.title}
                 </h5>
                 <p className="mb-4 text-base text-neutral-600 ">
@@ -90,7 +90,7 @@ function Recommended() {
                   data-te-ripple-init
                   data-te-ripple-color="light"
                 >
-                  Button
+                  CheckOut
                 </Link>
               </div>
             </div>
