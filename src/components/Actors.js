@@ -34,11 +34,7 @@ function Actors() {
               <div className="actor-item flex flex-col items-center mt-2">
                 <Image src={Actor.image} alt="actor" width={160} height={300} />
               </div>
-              <p>
-                {Actor.first_name}
-                <br />
-                {Actor.last_name}
-              </p>
+              <p>{Actor.first_name + " " + Actor.last_name}</p>
             </Link>
           </div>
         ))}
