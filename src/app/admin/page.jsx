@@ -195,7 +195,6 @@ function AdminPanel() {
           </label>
           <div className="grid grid-cols-2">
             <div>
-              cant find actor :
               <button
                 onClick={(e) => showAddActor(e)}
                 className="bg-red-500 text-white py-2 ml-32 h-fit px-4 rounded hover:bg-red-600 focus:outline-none focus:ring ring-red-500 focus:border-red-300 "
@@ -205,7 +204,6 @@ function AdminPanel() {
               {showact && <AddActor />}
             </div>
             <div>
-              cant find director:
               <button
                 onClick={(e) => showAddDirector(e)}
                 className="bg-red-500 text-white py-2 ml-32 h-fit px-4 rounded hover:bg-red-600 focus:outline-none focus:ring ring-red-500 focus:border-red-300"
@@ -265,7 +263,7 @@ function AdminPanel() {
               </div>
               <div>
                 <label className="block mb-3">
-                  language
+                  Language
                   <br />
                   <input
                     type="text"
@@ -303,7 +301,7 @@ function AdminPanel() {
               </div>
               <div>
                 <label className="block mb-3">
-                  duration in mins :
+                  Duration in mins :
                   <br />
                   <input
                     type="number"
@@ -322,7 +320,7 @@ function AdminPanel() {
               </div>
               <div>
                 <label className="block mb-3">
-                  Trialer :
+                  Trailer :
                   <br />
                   <input
                     type="text"

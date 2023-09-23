@@ -12,6 +12,9 @@ import "swiper/css/pagination";
 import { Pagination, Navigation } from "swiper/modules";
 import { Divider } from "@mui/material";
 import { redirect } from "next/navigation";
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import LanguageIcon from "@mui/icons-material/Language";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Link from "next/link";
 
 function Page({ params }) {
@@ -253,7 +256,7 @@ function Page({ params }) {
           <img src={film?.image} alt="film poster" width={280} height={420} />
         </div>
 
-        <div className=" h-96 overflow-y-auto scrollbar scrollbar-track-gray-900 scrollbar-thumb-red-700 scrollbar-thumb-rounded pr-5">
+        <div className=" h-96 overflow-y-auto scrollbar scrollbar-track-gray-900 scrollbar-thumb-red-700 scrollbar-thumb-rounded pr-5  text-lg">
           {film?.description}
         </div>
         <div className="  flex flex-col justify-center items-center">
@@ -261,6 +264,24 @@ function Page({ params }) {
             <img src={director?.image} width={180} height={360} alt="diector" />
           </div>
           <p>{director?.first_name}</p>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div className=" grid grid-cols-3 justify-items-center">
+        <div className="  flex bg-gray-900 text-red-700 p-4 rounded-lg shadow-lg text-2xl">
+          <AccessAlarmIcon />
+          <p className="text-white text-lg text-center">{film.duration} min</p>
+        </div>
+        <div className=" flex bg-gray-900 text-red-700 p-4 rounded-lg shadow-lg text-2xl">
+          <LanguageIcon />
+          <p className="text-white text-lg text-center">{film.language}</p>
+        </div>
+        <div className="flex bg-gray-900 text-red-700 p-4 rounded-lg shadow-lg text-2xl">
+          <VisibilityOffIcon />
+          <p className="text-white text-lg text-center">
+            +{film.age_restriction}
+          </p>
         </div>
       </div>
       <br />
