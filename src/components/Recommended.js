@@ -79,9 +79,11 @@ function Recommended() {
                   {film?.title}
                 </h5>
                 <p className="mb-4 text-base text-neutral-600 ">
-                  Recommended <br />
-                  average rating
-                  <br /> surpassing 3.8
+                  <br />
+                  Average rating surpassing
+                  <br />
+                  <br />
+                  <p className=" text-red-700 text-4xl justify-center">3.8</p>
                 </p>
                 <Link
                   href={`/Film/${film.id}`}
