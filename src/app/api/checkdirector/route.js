@@ -5,7 +5,7 @@ export async function POST(request) {
   console.log(body);
   const directorfound = await prisma.director.findFirst({
     where: {
-      AND: [{ first_name: body.first_name }, { last_name: body.last_name }],
+      AND: [{ first_name: body.firstName }, { last_name: body.lastName }],
     },
   });
   return new Response(JSON.stringify(directorfound));
