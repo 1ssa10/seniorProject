@@ -139,7 +139,7 @@ function AdminPanel() {
     if (selectedActors.length < 6) {
       errors.Actors = "Please Select and Save at Least 6 Actors";
     }
-    if (Categories.length < 6) {
+    if (Categories.length === 0) {
       errors.cat = "Please Select ";
     }
     if (Object.keys(director).length === 0) {
