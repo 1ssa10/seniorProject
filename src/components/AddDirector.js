@@ -75,7 +75,7 @@ function AddDirector({ setdirector }) {
   const validation = async () => {
     const errors = {};
 
-    const namevalidation = /^[A-Za-z][a-z]{1,}$/;
+    const namevalidation = /^[A-Za-z][A-Za-z]{1,}$/;
     const digitValidation = /^\d{2}$/;
 
     if (!firstName) {
