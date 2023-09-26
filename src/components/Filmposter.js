@@ -88,7 +88,12 @@ function Filmposter() {
                           // }}
                         />
                       </div>
-                      <p className=" text-center break-words">{film.title}</p>
+                      <p
+                        className=" text-center overflow-hidden whitespace-nowrap overflow-ellipsis"
+                        style={{ maxWidth: "160px" }}
+                      >
+                        {film.title}
+                      </p>
                     </Link>
                   </div>
                 ))}
