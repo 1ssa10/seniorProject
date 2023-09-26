@@ -67,7 +67,7 @@ function AddDirector({ setdirector }) {
         console.error(e);
       }
 
-      alert("actor added created");
+      alert("director added created");
     } else {
       // Form validation failed, update the errors state
     }
