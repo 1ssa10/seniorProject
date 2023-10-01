@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import React, { use, useState } from "react";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
+import ProfileImage from "@/components/ProfileImage";
 
 function Profile() {
   const session = useSession();
@@ -99,6 +100,11 @@ function Profile() {
             width={280}
             height={420}
           />
+          {/* <ProfileImage
+            src={profilePic}
+            className={`object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg`}
+          />
+          {console.log(profilePic)} */}
           <div className="flex flex-col justify-center items-center p-4 leading-normal">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-red-700">
               {user.name}

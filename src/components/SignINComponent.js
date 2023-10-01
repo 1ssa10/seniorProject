@@ -41,13 +41,13 @@ function SignINComponent() {
               <h1 className="text-2xl flex justify-center text-gray-700 font-sans font-bold">
                 {randomfilm?.title}
               </h1>
-              <p className="mt-9">Please signIn !</p>
-              <p>Dont have an account ?</p>
+              <p className="mt-9">Please sign in!</p>
+              <p>Don't have an account?</p>
               <button
                 className="bg-red-700  text-white font-bold hover:bg-transparent  hover: border border-red-700 hover:text-red-700  py-2 px-4 rounded-full mt-32 "
                 onClick={() => signIn()}
               >
-                SignIn
+                Sign in
               </button>{" "}
               &nbsp;
               <Link

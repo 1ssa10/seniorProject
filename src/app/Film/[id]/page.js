@@ -260,10 +260,13 @@ function Page({ params }) {
           {film?.description}
         </div>
         <div className="  flex flex-col justify-center items-center">
+          <p className="text-red-700">Directed By :</p>
           <div>
             <img src={director?.image} width={180} height={360} alt="diector" />
           </div>
-          <p>{director?.first_name}</p>
+          <p>
+            {director?.first_name} {director?.last_name}
+          </p>
         </div>
       </div>
       <br />
